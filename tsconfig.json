@@ -1,0 +1,37 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compileOnSave": false,
+  "files": [],
+  "references": [
+    {
+      "path": "./apps/tenant-app"
+    },
+    {
+      "path": "./libs/shared/ui"
+    },
+    {
+      "path": "./libs/shared/theme"
+    },
+    {
+      "path": "./libs/shared/deriv-api"
+    },
+    {
+      "path": "./libs/shared/supabase"
+    },
+    {
+      "path": "./apps/tenant-app-1"
+    },
+    {
+      "path": "./apps/tenant-app-2"
+    },
+    {
+      "path": "./apps/tenant-app-3"
+    },
+    {
+      "path": "./apps/tenant-app-4"
+    },
+    {
+      "path": "./libs/shared/core-routes"
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+
+ NX   Nx Daemon was not able to compute the project graph.
+
+Log file with the error: /app/platform/.nx/workspace-data/d/daemon-error.log
+Please file an issue at https://github.com/nrwl/nx
+Nx Daemon is going to be disabled until you run "nx reset".
+
+
+> nx run @org/tenant-app-2:dev
+
+> next dev -p 3002
+
+   [1m[38;2;173;127;168m▲ Next.js 16.0.11[39m[22m (Turbopack)
+   - Local:         http://localhost:3002
+   - Network:       http://192.168.0.2:3002
+   - Environments: .env.local
+
+ [32m[1m✓[22m[39m Starting...
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+ [37m[1m○[22m[39m Compiling middleware ...
+ [33m[1m⚠[22m[39m The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+ [32m[1m✓[22m[39m Ready in 11.3s
+ [37m[1m○[22m[39m Compiling /login ...
+ GET /login [32m200[39m in 6.5s[2m (compile: 5.5s, proxy.ts: 140ms, render: 926ms)[22m
+[Server Auth] User trader@example.com authenticated as user
+ GET /dashboard-crypto [33m404[39m in 866ms[2m (compile: 779ms, proxy.ts: 8ms, render: 79ms)[22m
+ POST /login [34m303[39m in 2.2s[2m (compile: 98ms, proxy.ts: 201ms, render: 1920ms)[22m
+ GET /dashboard-crypto [33m404[39m in 51ms[2m (compile: 18ms, proxy.ts: 6ms, render: 28ms)[22m
+ GET /dashboard-crypto [33m404[39m in 156ms[2m (compile: 16ms, proxy.ts: 7ms, render: 133ms)[22m
+ GET /user/marketplace [32m200[39m in 662ms[2m (compile: 527ms, proxy.ts: 5ms, render: 130ms)[22m
+ [32m[1m✓[22m[39m Compiled in 5.9s
+ [32m[1m✓[22m[39m Compiled in 2.3s
+ [32m[1m✓[22m[39m Compiled in 36ms
+Warning: command "next dev -p 3002" exited with non-zero status code
+
+
+ NX   Running target dev for project @org/tenant-app-2 failed
+
+Failed tasks:
+
+- @org/tenant-app-2:dev
+
+Hint: run the command with --verbose for more details.
+

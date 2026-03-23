@@ -1,0 +1,12 @@
+{
+  "name": "@org/tenant-app-1",
+  "targets": {
+    "dev": {
+      "options": {
+        "cwd": "apps/tenant-app-1",
+        "command": "next dev -p 3001"
+      },
+      "executor": "nx:run-commands"
+    }
+  }
+}

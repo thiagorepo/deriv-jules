@@ -1,0 +1,109 @@
+class DerivApiService {
+  constructor() {
+    this.ws = null;
+    this.appId = null;
+    this.endpoint = null;
+    this.status = 'Disconnected';
+    this.listeners = new Set();
+    this.reconnectTimeout = null;
+  }
+
+  // Singleton instance getter
+  static getInstance() {
+    if (!DerivApiService.instance) {
+      DerivApiService.instance = new DerivApiService();
+    }
+    return DerivApiService.instance;
+  }
+
+  connect(appId, endpoint = 'wss://ws.binaryws.com/websockets/v3') {
+    // Prevent double connections (React 18 Strict Mode or fast re-renders)
+    if (this.status === 'Connecting' || this.status === 'Connected') {
+      console.log(`[Deriv API] Already ${this.status}. Skipping connect.`);
+      return;
+    }
+
+    this.appId = appId;
+    this.endpoint = endpoint;
+    this.updateStatus('Connecting');
+    
+    console.log(`[Deriv API] Connecting to ${this.endpoint}?app_id=${this.appId}...`);
+
+    try {
+      this.ws = new WebSocket(`${this.endpoint}?app_id=${this.appId}`);
+
+      this.ws.onopen = () => {
+        console.log('[Deriv API] Connection opened');
+        this.updateStatus('Connected');
+        // Clear any pending reconnect attempts
+        if (this.reconnectTimeout) clearTimeout(this.reconnectTimeout);
+      };
+
+      this.ws.onmessage = (msg) => {
+         // In a real app, parse msg.data and notify specific stores (like Redux/Zustand)
+         console.log('[Deriv API] Received message');
+      };
+
+      this.ws.onclose = () => {
+        console.log('[Deriv API] Connection closed');
+        this.updateStatus('Disconnected');
+        this.scheduleReconnect();
+      };
+
+      this.ws.onerror = (err) => {
+        console.error('[Deriv API] WebSocket Error:', err);
+      };
+
+    } catch(err) {
+       console.error('[Deriv API] Failed to instantiate WebSocket:', err);
+       this.updateStatus('Disconnected');
+       this.scheduleReconnect();
+    }
+  }
+
+  scheduleReconnect() {
+    if (this.reconnectTimeout) return;
+    console.log('[Deriv API] Scheduling reconnect in 5s...');
+    this.reconnectTimeout = setTimeout(() => {
+        this.reconnectTimeout = null;
+        this.connect(this.appId, this.endpoint);
+    }, 5000);
+  }
+
+  disconnect() {
+    if (this.ws) {
+      this.ws.close();
+      this.ws = null;
+    }
+    this.updateStatus('Disconnected');
+    if (this.reconnectTimeout) {
+      clearTimeout(this.reconnectTimeout);
+      this.reconnectTimeout = null;
+    }
+  }
+
+  ping() {
+    if (this.ws && this.status === 'Connected') {
+       this.ws.send(JSON.stringify({ ping: 1 }));
+       return Promise.resolve({ ping: 'pong' });
+    }
+    return Promise.reject(new Error('WebSocket not connected'));
+  }
+
+  // Subscribe to raw status changes (for React hooks to display)
+  subscribeStatus(callback) {
+    this.listeners.add(callback);
+    callback(this.status); // Immediately emit current status
+    return () => this.listeners.delete(callback);
+  }
+
+  updateStatus(newStatus) {
+    this.status = newStatus;
+    this.listeners.forEach(cb => cb(this.status));
+  }
+}
+
+// Export the singleton creator wrapper to maintain backward compat with our UI code structure
+export function createDerivApi() {
+  return DerivApiService.getInstance();
+}
