@@ -1,0 +1,8 @@
+@import '../../../libs/shared/core-routes/src/lib/global.css';
+
+/* Tenant 3 Specific Tailwind Overrides */
+@theme inline {
+  --color-primary: #3b82f6;
+  --font-sans: 'Open Sans', system-ui, sans-serif;
+  --radius: 0.5rem;
+}

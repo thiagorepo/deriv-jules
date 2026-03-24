@@ -1,3 +1,9 @@
+/**
+ * DerivApiService
+ *
+ * A singleton WebSocket manager for connecting to the Deriv API.
+ * Automatically handles reconnection, state management, and pub/sub listener registration.
+ */
 class DerivApiService {
   constructor() {
     this.ws = null;
@@ -8,7 +14,10 @@ class DerivApiService {
     this.reconnectTimeout = null;
   }
 
-  // Singleton instance getter
+  /**
+   * Retrieves the singleton instance of the Deriv API service.
+   * @returns {DerivApiService}
+   */
   static getInstance() {
     if (!DerivApiService.instance) {
       DerivApiService.instance = new DerivApiService();
@@ -16,6 +25,11 @@ class DerivApiService {
     return DerivApiService.instance;
   }
 
+  /**
+   * Connects to the Deriv WebSocket API.
+   * @param {string} appId - The Deriv Application ID.
+   * @param {string} [endpoint='wss://ws.binaryws.com/websockets/v3'] - The Deriv WS endpoint.
+   */
   connect(appId, endpoint = 'wss://ws.binaryws.com/websockets/v3') {
     // Prevent double connections (React 18 Strict Mode or fast re-renders)
     if (this.status === 'Connecting' || this.status === 'Connected') {
@@ -26,8 +40,10 @@ class DerivApiService {
     this.appId = appId;
     this.endpoint = endpoint;
     this.updateStatus('Connecting');
-    
-    console.log(`[Deriv API] Connecting to ${this.endpoint}?app_id=${this.appId}...`);
+
+    console.log(
+      `[Deriv API] Connecting to ${this.endpoint}?app_id=${this.appId}...`
+    );
 
     try {
       this.ws = new WebSocket(`${this.endpoint}?app_id=${this.appId}`);
@@ -40,8 +56,8 @@ class DerivApiService {
       };
 
       this.ws.onmessage = (msg) => {
-         // In a real app, parse msg.data and notify specific stores (like Redux/Zustand)
-         console.log('[Deriv API] Received message');
+        // In a real app, parse msg.data and notify specific stores (like Redux/Zustand)
+        console.log('[Deriv API] Received message');
       };
 
       this.ws.onclose = () => {
@@ -53,11 +69,10 @@ class DerivApiService {
       this.ws.onerror = (err) => {
         console.error('[Deriv API] WebSocket Error:', err);
       };
-
-    } catch(err) {
-       console.error('[Deriv API] Failed to instantiate WebSocket:', err);
-       this.updateStatus('Disconnected');
-       this.scheduleReconnect();
+    } catch (err) {
+      console.error('[Deriv API] Failed to instantiate WebSocket:', err);
+      this.updateStatus('Disconnected');
+      this.scheduleReconnect();
     }
   }
 
@@ -65,13 +80,23 @@ class DerivApiService {
     if (this.reconnectTimeout) return;
     console.log('[Deriv API] Scheduling reconnect in 5s...');
     this.reconnectTimeout = setTimeout(() => {
-        this.reconnectTimeout = null;
-        this.connect(this.appId, this.endpoint);
+      this.reconnectTimeout = null;
+      this.connect(this.appId, this.endpoint);
     }, 5000);
   }
 
+  /**
+   * Gracefully disconnects the WebSocket and cleans up listeners
+   * to prevent memory leaks across React re-renders or unmounts.
+   */
   disconnect() {
     if (this.ws) {
+      // Remove event listeners to prevent memory leaks across React re-renders or unmounts
+      this.ws.onopen = null;
+      this.ws.onmessage = null;
+      this.ws.onerror = null;
+      this.ws.onclose = null;
+
       this.ws.close();
       this.ws = null;
     }
@@ -84,8 +109,8 @@ class DerivApiService {
 
   ping() {
     if (this.ws && this.status === 'Connected') {
-       this.ws.send(JSON.stringify({ ping: 1 }));
-       return Promise.resolve({ ping: 'pong' });
+      this.ws.send(JSON.stringify({ ping: 1 }));
+      return Promise.resolve({ ping: 'pong' });
     }
     return Promise.reject(new Error('WebSocket not connected'));
   }
@@ -99,11 +124,15 @@ class DerivApiService {
 
   updateStatus(newStatus) {
     this.status = newStatus;
-    this.listeners.forEach(cb => cb(this.status));
+    this.listeners.forEach((cb) => cb(this.status));
   }
 }
 
-// Export the singleton creator wrapper to maintain backward compat with our UI code structure
+/**
+ * Returns the singleton instance of DerivApiService.
+ * Included to maintain backward compatibility with legacy UI code structure.
+ * @returns {DerivApiService}
+ */
 export function createDerivApi() {
   return DerivApiService.getInstance();
 }

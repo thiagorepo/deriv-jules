@@ -1,7 +1,12 @@
-# ui
+# @org/ui
 
-This library was generated with [Nx](https://nx.dev).
+The central repository for reusable Next.js components tailored for the multi-tenant trading platform.
+Built alongside Tailwind CSS v4.
 
-## Building
+## Components
 
-Run `nx build ui` to build the library.
+- Shared Layouts (`Sidebar`, `Header`)
+- Primitives (`Button`, `Card`, `InputField`)
+- Complex specific views (`AdminDashboard`, `UserPurchases`, `RegisterForm`)
+
+Components import their interactive functionality directly but rely entirely on `@org/theme` CSS variables to dictate their styles.
