@@ -1,4 +1,4 @@
-'use server'
+'use server';
 
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
@@ -16,15 +16,20 @@ import { createServerClient } from '@org/supabase';
  */
 export async function authenticateUser(email, password, redirectPath) {
   if (!email || password.length < 6) {
-    return { error: 'Invalid email or password (password must be at least 6 characters)' };
+    return {
+      error:
+        'Invalid email or password (password must be at least 6 characters)',
+    };
   }
 
   const cookieStore = await cookies();
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  
+  const supabaseKey =
+    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY ||
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
   if (!supabaseUrl || !supabaseKey) {
-     return { error: 'Supabase credentials not configured.' };
+    return { error: 'Supabase credentials not configured.' };
   }
 
   const supabase = createServerClient(supabaseUrl, supabaseKey, cookieStore);
@@ -47,7 +52,7 @@ export async function authenticateUser(email, password, redirectPath) {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     path: '/',
-    maxAge: 60 * 60 * 24 * 7 // 1 week
+    maxAge: 60 * 60 * 24 * 7, // 1 week
   });
 
   console.log(`[Server Auth] User ${email} authenticated as ${role}`);
@@ -68,11 +73,13 @@ export async function authenticateUser(email, password, redirectPath) {
 export async function logoutUser() {
   const cookieStore = await cookies();
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  
+  const supabaseKey =
+    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY ||
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
   if (supabaseUrl && supabaseKey) {
-     const supabase = createServerClient(supabaseUrl, supabaseKey, cookieStore);
-     await supabase.auth.signOut();
+    const supabase = createServerClient(supabaseUrl, supabaseKey, cookieStore);
+    await supabase.auth.signOut();
   }
 
   cookieStore.delete('user_role');

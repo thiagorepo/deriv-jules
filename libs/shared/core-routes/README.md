@@ -3,6 +3,7 @@
 The `core-routes` library contains the essential Next.js App Router logic, Server Actions, and Edge Middleware shared across all multitenant applications.
 
 ## Key Exports
+
 - **TenantPage**: The main dashboard page used by `tenant-app-*`.
 - **RootLayout**: The root layout wrapper handling themes.
 - **authenticateUser / logoutUser**: Supabase auth Server Actions.

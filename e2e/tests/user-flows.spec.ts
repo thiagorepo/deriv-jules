@@ -4,8 +4,9 @@ const PORT = process.env.PORT || 3000;
 const URL = `http://localhost:${PORT}`;
 
 test.describe('Authentication Flows', () => {
-
-  test('Dashboard loads correctly and navigation is functional', async ({ page }) => {
+  test('Dashboard loads correctly and navigation is functional', async ({
+    page,
+  }) => {
     await page.goto(URL);
     await expect(page.locator('h1')).toContainText('Dashboard');
 
@@ -27,7 +28,7 @@ test.describe('Authentication Flows', () => {
         domain: 'localhost',
         path: '/',
         httpOnly: true,
-      }
+      },
     ]);
 
     await page.goto(`${URL}/admin`);
@@ -69,7 +70,7 @@ test.describe('Authentication Flows', () => {
         domain: 'localhost',
         path: '/',
         httpOnly: true,
-      }
+      },
     ]);
 
     await page.goto(`${URL}/user`);

@@ -1,4 +1,4 @@
-@import "../../../libs/shared/core-routes/src/lib/global.css";
+@import '../../../libs/shared/core-routes/src/lib/global.css';
 
 /* Tenant 1 Specific Tailwind Overrides */
 @theme inline {

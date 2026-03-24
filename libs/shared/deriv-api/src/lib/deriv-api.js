@@ -40,8 +40,10 @@ class DerivApiService {
     this.appId = appId;
     this.endpoint = endpoint;
     this.updateStatus('Connecting');
-    
-    console.log(`[Deriv API] Connecting to ${this.endpoint}?app_id=${this.appId}...`);
+
+    console.log(
+      `[Deriv API] Connecting to ${this.endpoint}?app_id=${this.appId}...`
+    );
 
     try {
       this.ws = new WebSocket(`${this.endpoint}?app_id=${this.appId}`);
@@ -54,8 +56,8 @@ class DerivApiService {
       };
 
       this.ws.onmessage = (msg) => {
-         // In a real app, parse msg.data and notify specific stores (like Redux/Zustand)
-         console.log('[Deriv API] Received message');
+        // In a real app, parse msg.data and notify specific stores (like Redux/Zustand)
+        console.log('[Deriv API] Received message');
       };
 
       this.ws.onclose = () => {
@@ -67,11 +69,10 @@ class DerivApiService {
       this.ws.onerror = (err) => {
         console.error('[Deriv API] WebSocket Error:', err);
       };
-
-    } catch(err) {
-       console.error('[Deriv API] Failed to instantiate WebSocket:', err);
-       this.updateStatus('Disconnected');
-       this.scheduleReconnect();
+    } catch (err) {
+      console.error('[Deriv API] Failed to instantiate WebSocket:', err);
+      this.updateStatus('Disconnected');
+      this.scheduleReconnect();
     }
   }
 
@@ -79,8 +80,8 @@ class DerivApiService {
     if (this.reconnectTimeout) return;
     console.log('[Deriv API] Scheduling reconnect in 5s...');
     this.reconnectTimeout = setTimeout(() => {
-        this.reconnectTimeout = null;
-        this.connect(this.appId, this.endpoint);
+      this.reconnectTimeout = null;
+      this.connect(this.appId, this.endpoint);
     }, 5000);
   }
 
@@ -108,8 +109,8 @@ class DerivApiService {
 
   ping() {
     if (this.ws && this.status === 'Connected') {
-       this.ws.send(JSON.stringify({ ping: 1 }));
-       return Promise.resolve({ ping: 'pong' });
+      this.ws.send(JSON.stringify({ ping: 1 }));
+      return Promise.resolve({ ping: 'pong' });
     }
     return Promise.reject(new Error('WebSocket not connected'));
   }
@@ -123,7 +124,7 @@ class DerivApiService {
 
   updateStatus(newStatus) {
     this.status = newStatus;
-    this.listeners.forEach(cb => cb(this.status));
+    this.listeners.forEach((cb) => cb(this.status));
   }
 }
 

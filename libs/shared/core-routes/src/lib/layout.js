@@ -2,7 +2,8 @@
 
 export default function RootLayout({ children }) {
   // Use a sensible default, this could later be wired up to be dynamic on the server
-  const themeClass = process.env.NEXT_PUBLIC_THEME === 'light' ? 'light' : 'dark';
+  const themeClass =
+    process.env.NEXT_PUBLIC_THEME === 'light' ? 'light' : 'dark';
 
   return (
     <html lang="en" className={themeClass}>
