@@ -50,9 +50,6 @@
   "references": [
     {
       "path": "../../libs/shared/core-routes"
-    },
-    {
-      "path": "../../libs/shared/supabase"
     }
   ]
 }
