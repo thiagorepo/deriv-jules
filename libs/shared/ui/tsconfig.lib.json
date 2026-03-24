@@ -8,9 +8,11 @@
     "emitDeclarationOnly": false,
     "allowJs": true,
     "forceConsistentCasingInFileNames": true,
-    "types": ["node"]
+    "types": ["node"],
+    "jsx": "react-jsx",
+    "noImplicitAny": false
   },
-  "include": ["src/**/*.ts", "src/**/*.js"],
+  "include": ["src/**/*.ts", "src/**/*.js", "src/**/*.tsx", "src/**/*.jsx"],
   "references": [
     {
       "path": "../theme/tsconfig.lib.json"

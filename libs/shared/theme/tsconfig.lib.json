@@ -8,8 +8,10 @@
     "emitDeclarationOnly": false,
     "allowJs": true,
     "forceConsistentCasingInFileNames": true,
-    "types": ["node"]
+    "types": ["node"],
+    "jsx": "react-jsx",
+    "jsx": "react-jsx"
   },
-  "include": ["src/**/*.ts", "src/**/*.js"],
+  "include": ["src/**/*.ts", "src/**/*.js", "src/**/*.tsx", "src/**/*.jsx"],
   "references": []
 }
