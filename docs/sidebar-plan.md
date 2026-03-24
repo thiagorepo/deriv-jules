@@ -108,15 +108,26 @@ CREATE POLICY "Users can read own role"
   FOR SELECT
   USING (auth.uid() = user_id);
 
+-- Function to check admin status bypassing RLS to prevent infinite recursion
+CREATE OR REPLACE FUNCTION public.is_admin()
+RETURNS boolean AS $$
+DECLARE
+  is_admin boolean;
+BEGIN
+  SELECT EXISTS (
+    SELECT 1 FROM public.user_roles
+    WHERE user_id = auth.uid() AND role = 'admin'
+  ) INTO is_admin;
+  RETURN COALESCE(is_admin, false);
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
 -- Admins can do everything
 CREATE POLICY "Admins have full access"
   ON public.user_roles
   FOR ALL
   USING (
-    EXISTS (
-      SELECT 1 FROM public.user_roles
-      WHERE user_id = auth.uid() AND role = 'admin'
-    )
+    public.is_admin()
   );
 ```
 
