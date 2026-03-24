@@ -1,7 +1,7 @@
-# supabase
+# @org/supabase
 
-This library was generated with [Nx](https://nx.dev).
+A wrapper around `@supabase/ssr` to streamline integration with Supabase across both Server and Client Next.js components.
 
-## Building
-
-Run `nx build supabase` to build the library.
+## Utilities
+- `createServerClient`: Initialises a Supabase client that securely parses user roles and sessions from HttpOnly cookies in Server Components or Actions.
+- `createBrowserClient`: Initialises a client with session credentials read from `localStorage` useful for CSR component testing and initial OAuth.

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React from 'react';
 import { Card, Button } from './ui';
 import { useTheme } from '@org/theme';
 

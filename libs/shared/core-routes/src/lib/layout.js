@@ -1,4 +1,4 @@
-import './global.css';
+// CSS imported at tenant level
 
 export default function RootLayout({ children }) {
   // Use a sensible default, this could later be wired up to be dynamic on the server

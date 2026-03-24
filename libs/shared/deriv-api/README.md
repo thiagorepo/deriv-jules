@@ -1,7 +1,8 @@
-# deriv-api
+# @org/deriv-api
 
-This library was generated with [Nx](https://nx.dev).
+This package exposes a singleton `DerivApiService` which manages persistent WebSocket connections to the Deriv API.
 
-## Building
-
-Run `nx build deriv-api` to build the library.
+## Features
+- Provides an easy singleton getter `createDerivApi()`.
+- Built-in reconnection logic and pub/sub mechanisms for component status updates.
+- Properly handles cleanup and memory leak prevention during component unmounts.

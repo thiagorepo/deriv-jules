@@ -1,7 +1,6 @@
-# theme
+# @org/theme
 
-This library was generated with [Nx](https://nx.dev).
+The `theme` package provides React context providers and logic for applying dynamic styles like primary colors directly into the CSS DOM.
 
-## Building
-
-Run `nx build theme` to build the library.
+## Usage
+Wrap applications or sub-trees in `<ThemeProvider initialTheme={tenantConfig}>` to automatically override global Tailwind defaults (`--primary`) and apply them universally to all descendants.

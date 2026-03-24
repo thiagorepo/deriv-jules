@@ -1,0 +1,8 @@
+@import "../../../libs/shared/core-routes/src/lib/global.css";
+
+/* Default Tenant Specific Tailwind Overrides */
+@theme inline {
+  --color-primary: #6366f1;
+  --font-sans: 'Poppins', system-ui, sans-serif;
+  --radius: 0.375rem;
+}

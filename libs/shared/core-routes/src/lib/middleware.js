@@ -1,6 +1,15 @@
 import { NextResponse } from 'next/server';
 
-// Shared Middleware for all 5 Tenant Apps
+/**
+ * Shared Edge Middleware for all Tenant Apps.
+ *
+ * Intercepts incoming requests and evaluates the 'user_role' HTTP-only cookie
+ * to apply Role-Based Access Control (RBAC) securely before pages are rendered.
+ * It enforces authorization constraints based on paths like `/admin` and `/user`.
+ *
+ * @param {import('next/server').NextRequest} request - The incoming HTTP request.
+ * @returns {import('next/server').NextResponse} The redirected response or the next middleware execution state.
+ */
 export function tenantMiddleware(request) {
   const url = request.nextUrl.clone();
   

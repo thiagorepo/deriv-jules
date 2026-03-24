@@ -8,7 +8,7 @@ export function AdminUsers() {
   const theme = useTheme();
   
   // Mock Data
-  const [users, setUsers] = useState([
+  const [users] = useState([
     { id: 'USR-001', name: 'John Doe', email: 'john@example.com', role: 'User', plan: 'Pro', status: 'Active', joined: 'Oct 15, 2023' },
     { id: 'USR-002', name: 'Alice Smith', email: 'alice@example.com', role: 'Admin', plan: 'Enterprise', status: 'Active', joined: 'Nov 01, 2023' },
     { id: 'USR-003', name: 'Bob Johnson', email: 'bob@example.com', role: 'User', plan: 'Basic', status: 'Suspended', joined: 'Dec 10, 2023' },

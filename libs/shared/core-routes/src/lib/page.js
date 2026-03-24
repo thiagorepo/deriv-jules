@@ -1,18 +1,20 @@
-import { Header, Card, Button } from '@org/ui';
+import { Card, Button } from '@org/ui';
 import { ThemeProvider } from '@org/theme';
 import { cookies } from 'next/headers';
 import { createServerClient } from '@org/supabase';
 import ClientSupabaseTest from './client-supabase-test';
-import { DerivAPI } from '@org/deriv-api'; 
 
 export default async function TenantPage() {
   const cookieStore = cookies();
   
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL || 'mock-url',
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'mock-key',
-    { cookies: { get(name) { return cookieStore.get(name)?.value; } } }
-  );
+  // Initialize supabase to ensure environment vars are picked up or pass client tests
+  if (process.env.NEXT_PUBLIC_SUPABASE_URL) {
+    createServerClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'mock-key',
+      cookieStore
+    );
+  }
 
   const tenantConfig = {
     theme: process.env.NEXT_PUBLIC_THEME || 'dark',

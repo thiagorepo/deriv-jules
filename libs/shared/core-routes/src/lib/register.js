@@ -23,7 +23,7 @@ export default function RegisterPage() {
     tenantName: tenantConfig.tenantName,
   };
 
-  const handleRegister = async ({ name, email, password }) => {
+  const handleRegister = async ({ email, password }) => {
     setLoading(true);
     setError('');
     
