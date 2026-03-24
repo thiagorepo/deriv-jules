@@ -3,12 +3,15 @@
 This document outlines the architecture, layout updates, and future requirements for the `Sidebar` component and Role-Based Access Control (RBAC) in the Multi-Tenant Trading Platform.
 
 ## 1. Sidebar Component Layout & Styling Updates
+
 The Sidebar (`libs/shared/ui/src/lib/sidebar.tsx`) is the central navigation mechanism. It receives the `userRole` property from the `DashboardLayout` and displays either admin or user-specific links.
 
 ### Issue Addressed: Missing from Snapshots
+
 The sidebar was reported missing from UI snapshots. This was primarily a styling and layout issue on desktop viewpoints (`lg` breakpoints).
 
 **Updates Applied:**
+
 - Added `lg:flex lg:flex-col` to the `aside` container to enforce a valid flexbox layout on desktop, overriding standard fixed positioning when static.
 - Enforced `lg:h-screen lg:w-72` explicitly to ensure it maintains its dimensional footprint inside the flex container of the `DashboardLayout`.
 - Ensured the inner wrapping `div` uses `flex-1 flex flex-col h-full` to push the footer down and allow the nav area to scroll properly.
@@ -18,9 +21,11 @@ These CSS adjustments guarantee the Sidebar remains consistently rendered during
 ## 2. Current Frontend RBAC Logic (Mock Implementation)
 
 ### Role Determination
+
 Currently, the application uses Edge Middleware to interpret roles based on the email address used during login (e.g., `@admin.com` -> Admin, others -> User).
 
 ### Frontend Consumption
+
 This role is passed down through Next.js layouts (`libs/shared/core-routes/src/lib/admin.tsx`, `user.tsx`, etc.) to the `DashboardLayout` component as a `userRole` prop.
 
 ```tsx
@@ -31,6 +36,7 @@ This role is passed down through Next.js layouts (`libs/shared/core-routes/src/l
 ```
 
 The `Sidebar` uses this prop to conditionally render navigation links:
+
 ```tsx
 const links = userRole === 'admin' ? adminLinks : userLinks;
 ```
@@ -42,6 +48,7 @@ const links = userRole === 'admin' ? adminLinks : userLinks;
 To move away from the mock implementation and support real RBAC, the backend database (Supabase) needs to be configured. Since there are currently no migrations in the codebase, we must define the schema.
 
 ### Goal
+
 Implement a robust Role-Based Access Control system directly in Postgres to be used by Supabase Auth and Data APIs.
 
 ### Supabase Migrations Required
@@ -49,6 +56,7 @@ Implement a robust Role-Based Access Control system directly in Postgres to be u
 We will need to create a new migration file (e.g., `supabase/migrations/00001_create_rbac_schema.sql`).
 
 #### A. Create Enum and Tables
+
 ```sql
 -- Create an enum for roles
 CREATE TYPE public.app_role AS ENUM ('admin', 'user');
@@ -67,6 +75,7 @@ CREATE INDEX user_roles_user_id_idx ON public.user_roles(user_id);
 ```
 
 #### B. Handle User Creation automatically
+
 Create a trigger to assign a default role when a new user signs up.
 
 ```sql
@@ -87,6 +96,7 @@ CREATE TRIGGER on_auth_user_created
 ```
 
 #### C. Row Level Security (RLS) Policies
+
 Enable RLS to ensure users can only read their own role, but an admin can read/update roles.
 
 ```sql
@@ -111,6 +121,7 @@ CREATE POLICY "Admins have full access"
 ```
 
 ## 4. Next Steps for Implementation
+
 1. **Apply Migrations:** Run the Supabase CLI to apply the SQL migration defined above.
 2. **Update Auth Actions:** Update the Next.js Server Actions (handling login/signup) to read the user's role from the `public.user_roles` table in Supabase rather than mocking it based on the email domain.
 3. **Update Middleware:** Update the Next.js Edge Middleware to verify the actual role from the session metadata or a fast lookup, ensuring `/admin/*` routes are fully protected.
