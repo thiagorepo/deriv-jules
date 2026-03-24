@@ -36,7 +36,8 @@
   "workspaces": [
     "packages/*",
     "apps/*",
-    "libs/shared/*"
+    "libs/shared/*",
+    "e2e"
   ],
   "dependencies": {
     "@tailwindcss/postcss": "^4.2.1",
