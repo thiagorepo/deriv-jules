@@ -8,11 +8,11 @@ This document outlines the detailed step-by-step plan to implement the Multi-Ten
 
 _Focus: Establishing the monorepo foundation, environment structure, and shared utilities (the "80%")._
 
-- [ ] **1.1 Database Schema Initialization**
-  - [ ] Implement `tenants`, `profiles`, and `tenant_memberships` tables with RLS policies and multi-tenant RPC helpers (`switch_active_tenant`, `get_current_tenant_id`).
-  - [ ] Implement Auth/Security tables (`deriv_tokens`, `api_keys`, `user_sessions`).
-  - [ ] Implement Billing tables (`feature_flags`, `subscription_plans`).
-  - [ ] Add base seed scripts for development.
+- [x] **1.1 Database Schema Initialization**
+  - [x] Implement `tenants`, `profiles`, and `tenant_memberships` tables with RLS policies and multi-tenant RPC helpers (`switch_active_tenant`, `get_current_tenant_id`).
+  - [x] Implement Auth/Security tables (`deriv_tokens`, `api_keys`, `user_sessions`).
+  - [x] Implement Billing tables (`feature_flags`, `subscription_plans`).
+  - [x] Add base seed scripts for development.
 - [ ] **1.2 Shared Supabase & Auth (`@org/supabase`, `@org/shared-auth`)**
   - [ ] Set up Supabase client factories for browser, server, and admin (service role).
   - [ ] Implement HOF Auth Guards: `withAuth`, `withAdmin`, `withTenant`.
