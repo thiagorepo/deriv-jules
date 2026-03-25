@@ -8,8 +8,8 @@ class DerivApiService {
   private ws: any = null;
   private appId: string | null = null;
   private endpoint: string | null = null;
-  private status: string = 'Disconnected';
-  private listeners: Set<Function> = new Set();
+  private status = 'Disconnected';
+  private listeners: Set<(...args: any[]) => void> = new Set();
   private reconnectTimeout: any = null;
   private static instance: DerivApiService;
 
@@ -38,10 +38,7 @@ class DerivApiService {
    * @param {string} appId - The Deriv Application ID.
    * @param {string} [endpoint='wss://ws.binaryws.com/websockets/v3'] - The Deriv WS endpoint.
    */
-  connect(
-    appId: string,
-    endpoint: string = 'wss://ws.binaryws.com/websockets/v3'
-  ) {
+  connect(appId: string, endpoint = 'wss://ws.binaryws.com/websockets/v3') {
     // Prevent double connections (React 18 Strict Mode or fast re-renders)
     if (this.status === 'Connecting' || this.status === 'Connected') {
       console.log(`[Deriv API] Already ${this.status}. Skipping connect.`);
@@ -129,7 +126,7 @@ class DerivApiService {
   }
 
   // Subscribe to raw status changes (for React hooks to display)
-  subscribeStatus(callback: Function) {
+  subscribeStatus(callback: (status: string) => void) {
     this.listeners.add(callback);
     callback(this.status); // Immediately emit current status
     return () => this.listeners.delete(callback);

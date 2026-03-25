@@ -54,7 +54,10 @@ export function createServerClient(
             single: function () {
               return this; // Keep chaining
             },
-            then: function (resolve: Function, _reject: Function) {
+            then: function (
+              resolve: (value: any) => void,
+              _reject: (reason?: any) => void
+            ) {
               // Execute query when awaited
               if (table === 'tenants') {
                 const mockTenants = [
