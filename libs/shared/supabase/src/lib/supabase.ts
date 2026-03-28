@@ -29,6 +29,10 @@ export function createServerClient(
         console.log('[Supabase SSR Auth] Attempting sign in with password...');
         return { data: { user: { email: credentials.email } }, error: null };
       },
+      signUp: async (credentials: any) => {
+          console.log('[Supabase SSR Auth] Attempting sign up...');
+          return { data: { user: { email: credentials.email } }, error: null };
+      },
       signOut: async () => {
         console.log('[Supabase SSR Auth] Signing out...');
         return { error: null };
@@ -118,6 +122,10 @@ export function createBrowserClient(supabaseUrl: string, _supabaseKey: string) {
       signInWithPassword: async (credentials: any) => {
         console.log('[Supabase CSR Auth] Attempting sign in with password...');
         return { data: { user: { email: credentials.email } }, error: null };
+      },
+      signUp: async (credentials: any) => {
+          console.log('[Supabase CSR Auth] Attempting sign up...');
+          return { data: { user: { email: credentials.email } }, error: null };
       },
       signOut: async () => {
         console.log('[Supabase CSR Auth] Signing out...');

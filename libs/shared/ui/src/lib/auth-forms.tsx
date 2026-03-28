@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useTheme } from '@org/theme';
-import { Button, Card } from './ui.js';
+import { Button, Card } from './ui';
 
 export function InputField({
   label,

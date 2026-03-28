@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Card, Button } from './ui.js';
+import { Card, Button } from './ui';
 import { useTheme } from '@org/theme';
 
 export function UserPlans() {

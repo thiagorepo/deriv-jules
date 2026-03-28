@@ -1,1 +1,2 @@
-export * from './lib/deriv-api.js';
+export * from './lib/deriv-api';
+export * from './lib/hooks';

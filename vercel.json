@@ -1,0 +1,6 @@
+{
+  "version": 2,
+  "buildCommand": "npx nx build tenant-app",
+  "outputDirectory": "apps/tenant-app/.next",
+  "framework": "nextjs"
+}

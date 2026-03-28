@@ -1,7 +1,7 @@
 'use client';
 
 import { useTheme } from '@org/theme';
-import { Card, Button } from './ui.js';
+import { Card, Button } from './ui';
 
 export function AdminDashboard({ user }: any) {
   const theme: any = useTheme();

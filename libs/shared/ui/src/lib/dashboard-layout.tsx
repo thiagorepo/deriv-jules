@@ -2,10 +2,10 @@
 
 import { useState } from 'react';
 import { useTheme } from '@org/theme';
-import { Sidebar } from './sidebar.js';
-import { MenuIcon } from './icons.js';
+import { Sidebar } from './sidebar';
+import { MenuIcon } from './icons';
 
-export function DashboardLayout({ children, userRole }: any) {
+export function DashboardLayout({ children, userRole, featureFlags }: any) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const theme: any = useTheme();
 
@@ -16,6 +16,7 @@ export function DashboardLayout({ children, userRole }: any) {
         userRole={userRole}
         isOpen={isSidebarOpen}
         setIsOpen={setIsSidebarOpen}
+        featureFlags={featureFlags}
       />
 
       {/* Main Content Area */}

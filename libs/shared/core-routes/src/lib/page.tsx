@@ -2,6 +2,7 @@ import { Card, Button } from '@org/ui';
 import { ThemeProvider } from '@org/theme';
 import { cookies } from 'next/headers';
 import { createServerClient } from '@org/supabase';
+
 export default async function TenantPage() {
   const cookieStore = cookies();
 

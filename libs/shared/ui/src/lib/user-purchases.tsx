@@ -1,6 +1,6 @@
 'use client';
 
-import { Card, Button } from './ui.js';
+import { Card, Button } from './ui';
 import { useTheme } from '@org/theme';
 
 export function UserPurchases() {
