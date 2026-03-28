@@ -5,13 +5,14 @@
  * Automatically handles reconnection, state management, and pub/sub listener registration.
  */
 class DerivApiService {
-  private ws: any = null;
-  private appId: string | null = null;
-  private endpoint: string | null = null;
-  private status = 'Disconnected';
-  private listeners: Set<(...args: any[]) => void> = new Set();
-  private reconnectTimeout: any = null;
-  private static instance: DerivApiService;
+  public ws: any = null;
+  public appId: string | null = null;
+  public endpoint: string | null = null;
+  public status = 'Disconnected';
+  public listeners: Set<(...args: any[]) => void> = new Set();
+  public messageListeners: Set<(data: any) => void> = new Set();
+  public reconnectTimeout: any = null;
+  public static instance: DerivApiService;
 
   constructor() {
     this.ws = null;
@@ -19,6 +20,7 @@ class DerivApiService {
     this.endpoint = null;
     this.status = 'Disconnected';
     this.listeners = new Set();
+    this.messageListeners = new Set();
     this.reconnectTimeout = null;
   }
 
@@ -36,9 +38,9 @@ class DerivApiService {
   /**
    * Connects to the Deriv WebSocket API.
    * @param {string} appId - The Deriv Application ID.
-   * @param {string} [endpoint='wss://ws.binaryws.com/websockets/v3'] - The Deriv WS endpoint.
+   * @param {string} [endpoint='wss://ws.derivws.com/websockets/v3'] - The Deriv WS endpoint.
    */
-  connect(appId: string, endpoint = 'wss://ws.binaryws.com/websockets/v3') {
+  connect(appId: string, endpoint = 'wss://ws.derivws.com/websockets/v3') {
     // Prevent double connections (React 18 Strict Mode or fast re-renders)
     if (this.status === 'Connecting' || this.status === 'Connected') {
       console.log(`[Deriv API] Already ${this.status}. Skipping connect.`);
@@ -65,9 +67,13 @@ class DerivApiService {
         if (this.reconnectTimeout) clearTimeout(this.reconnectTimeout);
       };
 
-      this.ws.onmessage = (_msg: any) => {
-        // In a real app, parse msg.data and notify specific stores (like Redux/Zustand)
-        console.log('[Deriv API] Received message');
+      this.ws.onmessage = (msg: any) => {
+        try {
+          const data = JSON.parse(msg.data);
+          this.messageListeners.forEach((cb) => cb(data));
+        } catch (e) {
+            console.error('[Deriv API] Error parsing message', e);
+        }
       };
 
       this.ws.onclose = () => {
@@ -117,6 +123,14 @@ class DerivApiService {
     }
   }
 
+  send(data: any) {
+    if (this.ws && this.status === 'Connected') {
+        this.ws.send(JSON.stringify(data));
+    } else {
+        console.warn('Cannot send data, websocket is not connected.');
+    }
+  }
+
   ping() {
     if (this.ws && this.status === 'Connected') {
       this.ws.send(JSON.stringify({ ping: 1 }));
@@ -130,6 +144,11 @@ class DerivApiService {
     this.listeners.add(callback);
     callback(this.status); // Immediately emit current status
     return () => this.listeners.delete(callback);
+  }
+
+  subscribeMessages(callback: (data: any) => void) {
+      this.messageListeners.add(callback);
+      return () => this.messageListeners.delete(callback);
   }
 
   updateStatus(newStatus: string) {

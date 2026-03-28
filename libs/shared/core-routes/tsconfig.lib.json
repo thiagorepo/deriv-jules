@@ -3,9 +3,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "outDir": "dist",
-    "types": [
-      "node"
-    ],
+    "types": ["node"],
     "rootDir": "src",
     "jsx": "preserve",
     "module": "esnext",
@@ -38,6 +36,9 @@
     },
     {
       "path": "../ui/tsconfig.lib.json"
+    },
+    {
+      "path": "../shared-auth/tsconfig.lib.json"
     },
     {
       "path": "../supabase/tsconfig.lib.json"

@@ -2,6 +2,7 @@ import React from 'react';
 import { AdminDashboard, Button, DashboardLayout } from '@org/ui';
 import { ThemeProvider } from '@org/theme';
 import { logoutUser } from './actions';
+import { withAdmin, withTenant } from '@org/shared-auth';
 
 const getTenantConfig = () => ({
   theme: process.env.NEXT_PUBLIC_THEME || 'dark',
@@ -12,7 +13,7 @@ const getTenantConfig = () => ({
 // Notice we no longer have useEffect or router redirects here.
 // If the user reaches this component, the Middleware has ALREADY guaranteed
 // they are an authenticated Admin.
-export default async function AdminPage() {
+async function BaseAdminPage({ user }: any) {
   const tenantConfig = getTenantConfig();
 
   const resolvedTheme = {
@@ -42,8 +43,10 @@ export default async function AdminPage() {
         </header>
 
         {/* Mock user object since we dropped localStorage. In reality, read from cookie or context */}
-        <AdminDashboard user={{ email: 'admin@platform.com' }} />
+        <AdminDashboard user={user || { email: 'admin@platform.com' }} />
       </DashboardLayout>
     </ThemeProvider>
   );
 }
+
+export const AdminPage = withAdmin(withTenant(BaseAdminPage));

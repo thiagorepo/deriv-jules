@@ -9,7 +9,7 @@ const getTenantConfig = () => ({
   tenantName: process.env.NEXT_PUBLIC_TENANT_NAME || 'Default Platform',
 });
 
-export default async function UserMarketplacePage() {
+export async function UserMarketplacePage() {
   const tenantConfig = getTenantConfig();
 
   const resolvedTheme = {

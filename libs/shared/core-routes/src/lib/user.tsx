@@ -2,6 +2,8 @@ import React from 'react';
 import { UserDashboard, Button, DashboardLayout } from '@org/ui';
 import { ThemeProvider } from '@org/theme';
 import { logoutUser } from './actions';
+import { withAuth, withTenant } from '@org/shared-auth';
+import { getTenantFeatureFlags } from './core-routes';
 
 const getTenantConfig = () => ({
   theme: process.env.NEXT_PUBLIC_THEME || 'dark',
@@ -9,8 +11,9 @@ const getTenantConfig = () => ({
   tenantName: process.env.NEXT_PUBLIC_TENANT_NAME || 'Default Platform',
 });
 
-export default async function UserPage() {
+async function BaseUserPage({ user, tenantId }: any) {
   const tenantConfig = getTenantConfig();
+  const featureFlags = await getTenantFeatureFlags(tenantId);
 
   const resolvedTheme = {
     colors: { primary: tenantConfig.primaryColor },
@@ -24,7 +27,7 @@ export default async function UserPage() {
 
   return (
     <ThemeProvider initialTheme={resolvedTheme}>
-      <DashboardLayout userRole="user">
+      <DashboardLayout userRole="user" featureFlags={featureFlags}>
         <header className="flex justify-between items-center mb-8 border-b border-border pb-4 mt-8 lg:mt-0">
           <div className="flex items-center space-x-4">
             <span className="text-2xl font-bold tracking-tight text-primary">
@@ -38,8 +41,10 @@ export default async function UserPage() {
           </form>
         </header>
 
-        <UserDashboard user={{ email: 'trader@example.com' }} />
+        <UserDashboard user={user || { email: 'trader@example.com' }} />
       </DashboardLayout>
     </ThemeProvider>
   );
 }
+
+export const UserPage = withAuth(withTenant(BaseUserPage));

@@ -9,7 +9,7 @@ const getTenantConfig = () => ({
   tenantName: process.env.NEXT_PUBLIC_TENANT_NAME || 'Default Platform',
 });
 
-export default async function AdminPlansPage() {
+export async function AdminPlansPage() {
   const tenantConfig = getTenantConfig();
 
   const resolvedTheme = {

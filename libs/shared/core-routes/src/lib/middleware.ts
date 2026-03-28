@@ -1,56 +1,55 @@
 import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
 
-/**
- * Shared Edge Middleware for all Tenant Apps.
- *
- * Intercepts incoming requests and evaluates the 'user_role' HTTP-only cookie
- * to apply Role-Based Access Control (RBAC) securely before pages are rendered.
- * It enforces authorization constraints based on paths like `/admin` and `/user`.
- *
- * @param {import('next/server').NextRequest} request - The incoming HTTP request.
- * @returns {import('next/server').NextResponse} The redirected response or the next middleware execution state.
- */
-export function tenantMiddleware(request: import('next/server').NextRequest) {
+export function tenantMiddleware(request: NextRequest) {
   const url = request.nextUrl.clone();
-
-  // Read the HttpOnly cookie set by the Server Action
   const userRole = request.cookies.get('user_role')?.value;
 
-  // 1. RBAC: Prevent unauthenticated users from accessing protected routes
-  if (
-    !userRole &&
-    (url.pathname.startsWith('/admin') || url.pathname.startsWith('/user'))
-  ) {
-    console.log(
-      '[Middleware] Unauthorized access attempt. Redirecting to /login.'
-    );
+  // Add CSP headers
+  const nonce = Buffer.from(crypto.randomUUID()).toString('base64');
+  const cspHeader = `
+    default-src 'self';
+    script-src 'self' 'nonce-${nonce}' 'strict-dynamic';
+    style-src 'self' 'unsafe-inline';
+    img-src 'self' blob: data: https://dummyimage.com;
+    font-src 'self';
+    object-src 'none';
+    base-uri 'self';
+    form-action 'self';
+    frame-ancestors 'none';
+    connect-src 'self' wss://ws.derivws.com https://*.supabase.co;
+  `.replace(/\s{2,}/g, ' ').trim();
+
+  const requestHeaders = new Headers(request.headers);
+  requestHeaders.set('x-nonce', nonce);
+  requestHeaders.set('Content-Security-Policy', cspHeader);
+
+  let response = NextResponse.next({
+    request: {
+      headers: requestHeaders,
+    },
+  });
+
+  // Basic RBAC
+  if (!userRole && (url.pathname.startsWith('/admin') || url.pathname.startsWith('/user'))) {
     url.pathname = '/login';
-    return NextResponse.redirect(url);
-  }
-
-  // 2. RBAC: Prevent standard 'user' from accessing '/admin'
-  if (userRole === 'user' && url.pathname.startsWith('/admin')) {
-    console.log(
-      '[Middleware] User attempted to access Admin Portal. Redirecting to /user.'
-    );
+    response = NextResponse.redirect(url);
+  } else if (userRole === 'user' && url.pathname.startsWith('/admin')) {
     url.pathname = '/user';
-    return NextResponse.redirect(url);
-  }
-
-  // 3. UX: Prevent authenticated users from going back to login/register pages
-  if (userRole && (url.pathname === '/login' || url.pathname === '/register')) {
-    console.log(
-      `[Middleware] Authenticated user (${userRole}) visiting auth page. Redirecting to dashboard.`
-    );
+    response = NextResponse.redirect(url);
+  } else if (userRole && (url.pathname === '/login' || url.pathname === '/register')) {
     url.pathname = userRole === 'admin' ? '/admin' : '/user';
-    return NextResponse.redirect(url);
+    response = NextResponse.redirect(url);
   }
 
-  return NextResponse.next();
+  response.headers.set('Content-Security-Policy', cspHeader);
+  response.headers.set('X-Content-Type-Options', 'nosniff');
+  response.headers.set('X-Frame-Options', 'DENY');
+  response.headers.set('X-XSS-Protection', '1; mode=block');
+
+  return response;
 }
 
-// Ensure the middleware only runs on paths we care about,
-// skipping Next.js static assets and image optimization
 export const config = {
   matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
 };

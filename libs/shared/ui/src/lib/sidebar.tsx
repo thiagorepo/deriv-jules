@@ -1,12 +1,12 @@
 'use client';
 
 import { useTheme } from '@org/theme';
-import { XMarkIcon } from './icons.js';
+import { XMarkIcon } from './icons';
 
-export function Sidebar({ userRole, isOpen, setIsOpen }: any) {
+export function Sidebar({ userRole, isOpen, setIsOpen, featureFlags }: any) {
   const theme: any = useTheme();
 
-  const adminLinks = [
+  const adminLinks: Array<{name: string, href: string, flag?: string}> = [
     { name: 'Dashboard', href: '/admin' },
     { name: 'User Management', href: '/admin/users' },
     { name: 'Products & Store', href: '/admin/products' },
@@ -15,16 +15,26 @@ export function Sidebar({ userRole, isOpen, setIsOpen }: any) {
     { name: 'Settings', href: '/admin/settings' },
   ];
 
-  const userLinks = [
-    { name: 'Trading Platform', href: '/user' },
+  const userLinks: Array<{name: string, href: string, flag?: string}> = [
+    { name: 'Trading Platform', href: '/user', flag: 'trading' },
     { name: 'Marketplace', href: '/user/marketplace' },
     { name: 'My Purchases', href: '/user/purchases' },
     { name: 'My Plan', href: '/user/plans' },
     { name: 'Portfolio', href: '/user/portfolio' },
     { name: 'Transaction History', href: '/user/history' },
+    { name: 'Wallet', href: '/user/wallet', flag: 'wallet' },
+    { name: 'Automation', href: '/user/automation', flag: 'automation' },
+    { name: 'Copy Trading', href: '/user/copy-trading', flag: 'copy_trading' },
   ];
 
-  const links = userRole === 'admin' ? adminLinks : userLinks;
+  let links = userRole === 'admin' ? adminLinks : userLinks;
+
+  if (featureFlags) {
+      links = links.filter(link => {
+          if (!link.flag) return true;
+          return featureFlags[link.flag] === true;
+      });
+  }
 
   const toggleSidebar = () => setIsOpen(!isOpen);
 

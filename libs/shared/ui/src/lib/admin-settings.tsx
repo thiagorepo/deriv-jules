@@ -1,9 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { Card, Button } from './ui.js';
+import { Card, Button } from './ui';
 import { useTheme } from '@org/theme';
-import { InputField } from './auth-forms.js';
+import { InputField } from './auth-forms';
 
 export function AdminSettings() {
   const theme: any = useTheme();
