@@ -1,0 +1,38 @@
+# Dependencies
+node_modules
+
+# Build directories
+dist
+build
+out
+.next
+.nuxt
+coverage
+
+# NX cache
+.nx/cache
+.nx/workspace-data
+
+# IDE and editor
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# Generated files
+*.spec.ts
+*.test.ts
+
+# Temporary files
+tmp
+temp

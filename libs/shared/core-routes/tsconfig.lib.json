@@ -32,6 +32,12 @@
   "include": ["src/**/*.js", "src/**/*.jsx", "src/**/*.ts", "src/**/*.tsx"],
   "references": [
     {
+      "path": "../shared-config/tsconfig.lib.json"
+    },
+    {
+      "path": "../deriv-api/tsconfig.lib.json"
+    },
+    {
       "path": "../theme/tsconfig.lib.json"
     },
     {

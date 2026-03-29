@@ -1,0 +1,30 @@
+{
+  "extends": ["../../eslint.config.mjs"],
+  "ignorePatterns": ["!**/*"],
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx"],
+      "extends": ["plugin:@nx/typescript"],
+      "parserOptions": {
+        "project": ["apps/core/tsconfig.json"],
+        "sourceType": "module"
+      },
+      "rules": {
+        "@next/next/no-html-link-for-pages": "off"
+      }
+    },
+    {
+      "files": ["*.js", "*.jsx"],
+      "extends": ["plugin:@nx/javascript"],
+      "parserOptions": {
+        "ecmaVersion": 2020
+      }
+    },
+    {
+      "files": ["next.config.js"],
+      "rules": {
+        "@nx/dependency-checks": "off"
+      }
+    }
+  ]
+}

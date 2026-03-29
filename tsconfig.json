@@ -38,6 +38,15 @@
     },
     {
       "path": "./libs/shared/shared-auth"
+    },
+    {
+      "path": "./libs/shared/shared-supabase"
+    },
+    {
+      "path": "./libs/shared/shared-types"
+    },
+    {
+      "path": "./apps/core"
     }
   ]
 }

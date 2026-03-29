@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "supabase-deriv-jules": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@supabase/mcp-server-supabase@latest",
+        "--project-ref",
+        "jdojhxtmbxrzteramsft"
+      ],
+      "env": {
+        "SUPABASE_ACCESS_TOKEN": "sbp_dc2cc86bab97c5fa50a1296bac4f3a632d385a41"
+      }
+    }
+  }
+}

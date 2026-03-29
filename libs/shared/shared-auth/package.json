@@ -16,7 +16,8 @@
     }
   },
   "dependencies": {
-    "@org/supabase": "*",
+    "@org/supabase": "workspace:*",
+    "@org/shared-types": "workspace:*",
     "@supabase/ssr": "^0.9.0",
     "@supabase/supabase-js": "^2.100.0",
     "next": "^16.2.1",

@@ -1,0 +1,154 @@
+🔍 DerivOpus Compliance Evaluator
+
+
+================================================================================
+📊 EVALUATION RESULTS
+================================================================================
+
+Timestamp: 2026-03-29T00:32:09.165Z
+
+🎯 OVERALL SCORES
+--------------------------------------------------------------------------------
+Overall Score (weighted): 73%
+Average Score (unweighted): 74%
+
+📋 CATEGORY BREAKDOWN
+--------------------------------------------------------------------------------
+
+📁 Monorepo Structure
+████████████████████ 100%
+  ✅ apps/ directory exists: apps/ found
+  ✅ apps/core (main app) exists: apps/core found
+  ✅ Tenant apps exist: 2+ tenant apps found
+  ✅ libs/shared directory (Nx pattern): libs/shared found (Nx structure)
+  ✅ All required shared packages exist: 5/5 found: shared-supabase, shared-auth, shared-config, shared-types, deriv-api
+  ✅ supabase/ directory exists: supabase/ found
+
+🔧 Tech Stack & Dependencies
+███████████░░░░░░░░░ 55%
+  ✅ next dependency: v^16.1.6
+  ✅ react dependency: v^19.2.4
+  ✅ typescript dependency: v~5.9.2
+  ✅ tailwindcss dependency: v^4.2.1
+  ❌ @hookform/resolvers dependency: missing - REQUIRED
+  ❌ react-hook-form dependency: missing - REQUIRED
+  ❌ zod dependency: missing - REQUIRED
+  ❌ @supabase/supabase-js dependency: missing - REQUIRED
+  ✅ nx dependency: v22.6.3
+  ✅ tsconfig.json exists: tsconfig.json found
+  ⚠️ tailwind.config.ts exists: Check if using Tailwind v4
+
+🔐 Authentication & Security
+█████████░░░░░░░░░░░ 43%
+  ✅ shared-auth package exists: Auth package found
+  ✅ Auth helpers directory exists: Auth helpers found
+  ❌ withAuth guard implemented: withAuth missing
+  ❌ withAdmin guard implemented: withAdmin missing
+  ❌ withTenant guard implemented: withTenant missing
+  ⚠️ MFA endpoints exist: 0 MFA files found
+  ✅ middleware.ts exists: Middleware found
+
+🗄️ Database Schema
+████████████████░░░░ 80%
+  ✅ supabase/migrations/ exists: Migrations found
+  ✅ SQL migration files exist: 1 migration files found
+  ⚠️ Required tables exist in migrations: 0/6 tables: 
+  ✅ RLS policies defined: RLS policies found
+  ✅ RPC functions defined: RPC functions found
+
+🔌 API Endpoints & Handlers
+█████████████░░░░░░░ 63%
+  ✅ API routes directory exists: API routes found
+  ✅ API route files exist: 10 route handlers found
+  ✅ Trading execute endpoint: Found
+  ⚠️ Stripe webhook endpoint: Not implemented yet
+  ✅ Stripe checkout endpoint: Found
+  ✅ MFA endpoints: Found
+  ⚠️ Error response utility: error handling utilities
+  ⚠️ Error logger utility: logging utilities
+
+🎨 UI Components & Theme
+█████████████░░░░░░░ 67%
+  ✅ UI components directory exists: UI components found
+  ⚠️ shadcn/ui primitives installed: 0 component files found (spec: 47+)
+  ✅ Layout components exist: Layout components found
+  ✅ Form field wrappers exist: Form components found
+  ✅ Feature components exist: Domain-specific components found
+  ⚠️ Theme CSS variables defined: CSS theme system missing
+
+📄 Pages & Routes
+████████████████░░░░ 80%
+  ✅ app/ directory (Next.js App Router) exists: App Router found
+  ✅ Auth routes (auth): auth/ found
+  ✅ Protected app routes ((app)): (app)/ found
+  ⚠️ Dashboard page (overview): overview/ missing
+  ✅ Page files implemented: 11 pages found
+
+🔗 External Integrations
+████████████████░░░░ 80%
+  ✅ deriv-api package exists: Deriv API package found
+  ✅ Deriv React hooks: Custom hooks found
+  ⚠️ Stripe integration code: 0 Stripe files found
+  ✅ shared-config package exists: Config package found
+  ✅ Supabase client factories: Client factories found
+
+📚 Documentation
+████████████████████ 100%
+  ✅ docs/ directory exists: docs/ found
+  ✅ specifications.md exists: specifications.md found
+  ✅ implementation-plan.md exists: implementation-plan.md found
+  ✅ project-documentation.md exists: project-documentation.md found
+  ✅ CLAUDE.md exists: CLAUDE.md found
+  ✅ README.md exists: README found
+
+✅ Testing & Quality
+█████████████░░░░░░░ 67%
+  ✅ Jest or Vitest configured: Jest: true, Vitest files: 3
+  ⚠️ Test files exist: 0 test files found
+  ✅ E2E tests configured (Playwright): E2E directory: true, spec files: 2
+
+================================================================================
+⚠️  CRITICAL ISSUES
+================================================================================
+✅ No critical issues found
+
+⚠️  ALL WARNINGS & FAILURES
+================================================================================
+
+🔧 Tech Stack & Dependencies:
+  [🔧 Tech Stack & Dependencies] @hookform/resolvers dependency: missing - REQUIRED
+  [🔧 Tech Stack & Dependencies] react-hook-form dependency: missing - REQUIRED
+  [🔧 Tech Stack & Dependencies] zod dependency: missing - REQUIRED
+  [🔧 Tech Stack & Dependencies] @supabase/supabase-js dependency: missing - REQUIRED
+  [🔧 Tech Stack & Dependencies] tailwind.config.ts exists: Check if using Tailwind v4
+
+🔐 Authentication & Security:
+  [🔐 Authentication & Security] withAuth guard implemented: withAuth missing
+  [🔐 Authentication & Security] withAdmin guard implemented: withAdmin missing
+  [🔐 Authentication & Security] withTenant guard implemented: withTenant missing
+  [🔐 Authentication & Security] MFA endpoints exist: 0 MFA files found
+
+🗄️ Database Schema:
+  [🗄️ Database Schema] Required tables exist in migrations: 0/6 tables: 
+
+🔌 API Endpoints & Handlers:
+  [🔌 API Endpoints & Handlers] Stripe webhook endpoint: Not implemented yet
+  [🔌 API Endpoints & Handlers] Error response utility: error handling utilities
+  [🔌 API Endpoints & Handlers] Error logger utility: logging utilities
+
+🎨 UI Components & Theme:
+  [🎨 UI Components & Theme] shadcn/ui primitives installed: 0 component files found (spec: 47+)
+  [🎨 UI Components & Theme] Theme CSS variables defined: CSS theme system missing
+
+📄 Pages & Routes:
+  [📄 Pages & Routes] Dashboard page (overview): overview/ missing
+
+🔗 External Integrations:
+  [🔗 External Integrations] Stripe integration code: 0 Stripe files found
+
+✅ Testing & Quality:
+  [✅ Testing & Quality] Test files exist: 0 test files found
+
+================================================================================
+Evaluation complete. Scores saved to EVAL_RESULTS.json
+

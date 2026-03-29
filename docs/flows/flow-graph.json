@@ -1,0 +1,205 @@
+{
+  "version": "1.0.0",
+  "generated": "2026-03-28",
+  "project": "deriv-jules",
+  "flows": {
+    "authentication": {
+      "UF-AUTH-001": {
+        "name": "Login Flow",
+        "type": "user",
+        "steps": [
+          {"id": "landing", "action": "view_landing_page"},
+          {"id": "login_form", "action": "enter_credentials"},
+          {"id": "validate", "action": "validate_credentials"},
+          {"id": "success", "action": "redirect_to_dashboard"}
+        ],
+        "errorBranch": [
+          {"id": "error", "action": "show_error_message"},
+          {"id": "register", "action": "show_register_link"}
+        ],
+        "specRef": "UXL-001"
+      },
+      "UF-AUTH-002": {
+        "name": "Registration Flow",
+        "type": "user",
+        "steps": [
+          {"id": "register_link", "action": "click_register"},
+          {"id": "fill_form", "action": "enter_details"},
+          {"id": "validate", "action": "validate_password"},
+          {"id": "confirm", "action": "confirm_email"}
+        ],
+        "specRef": "UXL-001"
+      },
+      "UF-AUTH-003": {
+        "name": "Password Reset Flow",
+        "type": "user",
+        "steps": [
+          {"id": "forgot", "action": "click_forgot_password"},
+          {"id": "enter_email", "action": "enter_email"},
+          {"id": "send_email", "action": "send_reset_email"},
+          {"id": "check_inbox", "action": "check_email"},
+          {"id": "reset", "action": "reset_password"}
+        ],
+        "specRef": "UXL-001"
+      }
+    },
+    "trading": {
+      "UF-TRADE-001": {
+        "name": "Market Selection Flow",
+        "type": "user",
+        "steps": [
+          {"id": "dashboard", "action": "view_dashboard"},
+          {"id": "markets_list", "action": "view_markets"},
+          {"id": "filter", "action": "filter_category"},
+          {"id": "select", "action": "select_market"}
+        ],
+        "categories": ["Forex", "Commodities", "Indices", "Synthetic", "Stocks"],
+        "specRef": "UXL-001"
+      },
+      "UF-TRADE-002": {
+        "name": "Trade Execution Flow",
+        "type": "user",
+        "steps": [
+          {"id": "configure", "action": "configure_trade"},
+          {"id": "preview", "action": "preview_summary"},
+          {"id": "confirm", "action": "confirm_dialog"},
+          {"id": "execute", "action": "execute_trade"},
+          {"id": "position_created", "action": "view_position"}
+        ],
+        "parameters": {
+          "symbol": {"required": true},
+          "contract_type": {"required": true, "enum": ["CALL", "PUT"]},
+          "stake": {"required": true, "min": 1, "max": 10000},
+          "duration": {"required": true},
+          "duration_unit": {"required": true, "enum": ["s", "m", "h", "d"]}
+        },
+        "specRef": "UXL-001"
+      },
+      "UF-TRADE-003": {
+        "name": "Position Management Flow",
+        "type": "user",
+        "steps": [
+          {"id": "view", "action": "view_positions"},
+          {"id": "monitor", "action": "monitor_pl"},
+          {"id": "sell", "action": "sell_position"},
+          {"id": "confirm", "action": "confirm_sell"},
+          {"id": "closed", "action": "view_closed_position"}
+        ],
+        "specRef": "UXL-001"
+      },
+      "UF-TRADE-004": {
+        "name": "Trade History Flow",
+        "type": "user",
+        "steps": [
+          {"id": "view_history", "action": "view_trade_history"},
+          {"id": "filter", "action": "filter_results"},
+          {"id": "export", "action": "export_data"}
+        ],
+        "specRef": "UXL-001"
+      }
+    },
+    "admin": {
+      "UF-ADMIN-001": {
+        "name": "User Management Flow",
+        "type": "admin",
+        "steps": [
+          {"id": "dashboard", "action": "view_admin_dashboard"},
+          {"id": "users_list", "action": "view_users"},
+          {"id": "search", "action": "search_filter"},
+          {"id": "view_user", "action": "view_user_detail"},
+          {"id": "edit", "action": "edit_user"},
+          {"id": "save", "action": "save_changes"}
+        ],
+        "specRef": "UXL-001"
+      },
+      "UF-ADMIN-002": {
+        "name": "Product Management Flow",
+        "type": "admin",
+        "steps": [
+          {"id": "products_list", "action": "view_products"},
+          {"id": "add", "action": "add_product"},
+          {"id": "fill_form", "action": "fill_product_form"},
+          {"id": "save", "action": "save_product"}
+        ],
+        "specRef": "UXL-001"
+      },
+      "UF-ADMIN-003": {
+        "name": "Plan Management Flow",
+        "type": "admin",
+        "steps": [
+          {"id": "plans_list", "action": "view_plans"},
+          {"id": "add", "action": "add_plan"},
+          {"id": "configure", "action": "configure_features"},
+          {"id": "activate", "action": "activate_plan"}
+        ],
+        "specRef": "UXL-001"
+      }
+    },
+    "system": {
+      "SF-ERROR-001": {
+        "name": "API Error Flow",
+        "type": "system",
+        "steps": [
+          {"id": "api_error", "action": "detect_error"},
+          {"id": "show_error", "action": "show_error_toast"},
+          {"id": "retry", "action": "retry_action"},
+          {"id": "result", "action": "success_or_fail"}
+        ],
+        "specRef": "UXL-001"
+      },
+      "SF-ERROR-002": {
+        "name": "WebSocket Disconnect Flow",
+        "type": "system",
+        "steps": [
+          {"id": "disconnect", "action": "ws_disconnect"},
+          {"id": "warning", "action": "show_warning_banner"},
+          {"id": "reconnect", "action": "auto_reconnect"},
+          {"id": "resume", "action": "resume_operations"}
+        ],
+        "maxRetries": 3,
+        "specRef": "UXL-001"
+      },
+      "SF-SESSION-001": {
+        "name": "Session Expiry Flow",
+        "type": "system",
+        "steps": [
+          {"id": "expired", "action": "session_expired"},
+          {"id": "modal", "action": "show_modal"},
+          {"id": "relogin", "action": "relogin_form"},
+          {"id": "resume", "action": "resume_session"}
+        ],
+        "specRef": "UXL-001"
+      }
+    },
+    "realtime": {
+      "SF-REALTIME-001": {
+        "name": "Price Update Flow",
+        "type": "system",
+        "steps": [
+          {"id": "tick", "action": "receive_deriv_tick"},
+          {"id": "parse", "action": "parse_data"},
+          {"id": "update", "action": "update_ui"},
+          {"id": "animate", "action": "animate_change"}
+        ],
+        "specRef": "UXL-001"
+      },
+      "SF-REALTIME-002": {
+        "name": "Position Update Flow",
+        "type": "system",
+        "steps": [
+          {"id": "event", "action": "position_event"},
+          {"id": "calculate", "action": "calculate_pl"},
+          {"id": "update", "action": "update_state"},
+          {"id": "notify", "action": "notify_user"}
+        ],
+        "specRef": "UXL-001"
+      }
+    }
+  },
+  "summary": {
+    "totalFlows": 15,
+    "userFlows": 7,
+    "systemFlows": 6,
+    "adminFlows": 3
+  }
+}

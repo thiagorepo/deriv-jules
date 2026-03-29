@@ -1,0 +1,2 @@
+# shadcn/ui components directory
+# Components are generated via: pnpm nx exec -- npx shadcn-ui@latest add

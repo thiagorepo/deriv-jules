@@ -1,0 +1,55 @@
+# Supabase Configuration
+# Documentation: https://supabase.com/docs
+
+[project]
+project_id = "deriv-jules"
+region = "us-east-1"
+
+[api]
+enabled = true
+max_rows = 1000
+
+[db]
+enabled = true
+# Connection string pattern: postgresql://user:password@host:port/database
+
+[auth]
+enabled = true
+site_url = "http://localhost:3000"
+additional_redirect_urls = [
+  "http://localhost:3000/callback",
+  "http://localhost:3001/callback"
+]
+
+# Email settings
+[auth.email]
+enable_signup = true
+enable_confirmations = true
+confirm_email_before_signin = true
+double_confirm_changes = true
+max_enrolled_factors = 2
+
+# Password settings  
+[auth.password]
+minLength = 6
+
+# Session settings
+[auth.sessions]
+absolute_session_timeout = 604800
+
+[realtime]
+enabled = true
+max_bytes_per_second = 1000000
+
+[storage]
+enabled = true
+
+[storage.s3]
+enabled = true
+
+[analytics]
+enabled = true
+vector_enabled = true
+
+[ssl_enforced_configs]
+database_ssl = true

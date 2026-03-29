@@ -1,0 +1,74 @@
+{
+  "name": "core",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/core/src",
+  "prefix": "deriv-opus",
+  "tags": ["type:app", "scope:core"],
+  "targets": {
+    "build": {
+      "executor": "@nx/next:build",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "root": "apps/core",
+        "outputPath": "dist/apps/core"
+      },
+      "configurations": {
+        "development": {
+          "dev": true
+        },
+        "production": {}
+      }
+    },
+    "dev": {
+      "executor": "@nx/next:dev",
+      "defaultConfiguration": "development",
+      "options": {
+        "root": "apps/core",
+        "buildTarget": "core:build"
+      },
+      "configurations": {
+        "development": {
+          "dev": true
+        }
+      }
+    },
+    "serve-static": {
+      "executor": "@nx/next:serve-static",
+      "outputs": [],
+      "options": {
+        "buildTarget": "core:build",
+        "dev": false
+      },
+      "configurations": {
+        "development": {
+          "dev": true
+        },
+        "production": {}
+      }
+    },
+    "start": {
+      "executor": "@nx/next:build",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "root": "apps/core",
+        "outputPath": "dist/apps/core"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/core/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "typecheck": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outDir}"],
+      "options": {
+        "tsConfig": "apps/core/tsconfig.json"
+      }
+    }
+  }
+}

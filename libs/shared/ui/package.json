@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "tslib": "^2.3.0",
-    "@org/theme": "*"
+    "@org/theme": "workspace:*"
   },
   "peerDependencies": {
     "react": "^19.0.0"

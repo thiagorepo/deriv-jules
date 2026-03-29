@@ -1,0 +1,33 @@
+{
+  "name": "@org/tenant-app",
+  "targets": {
+    "dev": {
+      "options": {
+        "cwd": "apps/tenant-app",
+        "command": "next dev -p 3000"
+      },
+      "executor": "nx:run-commands"
+    },
+    "build": {
+      "options": {
+        "cwd": "apps/tenant-app",
+        "command": "next build"
+      },
+      "executor": "nx:run-commands"
+    },
+    "start": {
+      "options": {
+        "cwd": "apps/tenant-app",
+        "command": "next start"
+      },
+      "executor": "nx:run-commands"
+    },
+    "lint": {
+      "options": {
+        "cwd": "apps/tenant-app",
+        "command": "eslint ."
+      },
+      "executor": "nx:run-commands"
+    }
+  }
+}

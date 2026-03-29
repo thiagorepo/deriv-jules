@@ -1,0 +1,257 @@
+{
+  "version": "1.0.0",
+  "generated": "2026-03-28",
+  "project": "deriv-jules",
+  "tasks": [
+    {
+      "id": "TASK-AUTH-001",
+      "title": "Implement Real Authentication",
+      "priority": "HIGH",
+      "status": "pending",
+      "category": "authentication",
+      "specRef": "PRD-001",
+      "flowRef": "UF-AUTH-001",
+      "description": "Replace mock authentication with Supabase Auth integration",
+      "acceptanceCriteria": [
+        "Users can sign up with email/password",
+        "Users can sign in with valid credentials",
+        "Session persists across page refreshes",
+        "Protected routes redirect unauthenticated users"
+      ],
+      "files": [
+        "libs/shared/shared-auth/src/lib/provider.tsx",
+        "libs/shared/shared-auth/src/lib/operations.ts"
+      ]
+    },
+    {
+      "id": "TASK-AUTH-002",
+      "title": "Wire Supabase Client",
+      "priority": "HIGH",
+      "status": "pending",
+      "category": "database",
+      "specRef": "SIL-001",
+      "description": "Connect Supabase client to shared library",
+      "acceptanceCriteria": [
+        "Supabase client initializes with env vars",
+        "Client is accessible from shared library",
+        "Connection is verified on app startup"
+      ],
+      "files": [
+        "libs/shared/supabase/src/lib/client.ts"
+      ]
+    },
+    {
+      "id": "TASK-AUTH-003",
+      "title": "Implement Password Reset",
+      "priority": "MEDIUM",
+      "status": "pending",
+      "category": "authentication",
+      "specRef": "PRD-001",
+      "flowRef": "UF-AUTH-003",
+      "description": "Add password reset functionality",
+      "acceptanceCriteria": [
+        "Users can request password reset email",
+        "Reset link opens password reset form",
+        "New password is validated and saved"
+      ]
+    },
+    {
+      "id": "TASK-TRADE-001",
+      "title": "Connect Deriv WebSocket API",
+      "priority": "HIGH",
+      "status": "pending",
+      "category": "trading",
+      "specRef": "SIL-001",
+      "description": "Wire Deriv API client to shared library",
+      "acceptanceCriteria": [
+        "WebSocket connects to Deriv endpoint",
+        "API token authorization works",
+        "Connection handles reconnection"
+      ],
+      "files": [
+        "libs/shared/deriv-api/src/lib/deriv-api.ts"
+      ]
+    },
+    {
+      "id": "TASK-TRADE-002",
+      "title": "Implement Market Selection",
+      "priority": "HIGH",
+      "status": "pending",
+      "category": "trading",
+      "specRef": "PRD-001",
+      "flowRef": "UF-TRADE-001",
+      "description": "Build market selection UI with categories",
+      "acceptanceCriteria": [
+        "Markets display in category tabs",
+        "Real-time price updates show",
+        "Search/filter functionality works"
+      ]
+    },
+    {
+      "id": "TASK-TRADE-003",
+      "title": "Implement Trade Execution",
+      "priority": "HIGH",
+      "status": "pending",
+      "category": "trading",
+      "specRef": "PRD-001",
+      "flowRef": "UF-TRADE-002",
+      "description": "Build trade configuration and execution flow",
+      "acceptanceCriteria": [
+        "Trade form validates all inputs",
+        "Preview shows potential profit/loss",
+        "Confirmation dialog appears before execution",
+        "Position is created after confirmation"
+      ]
+    },
+    {
+      "id": "TASK-TRADE-004",
+      "title": "Implement Position Management",
+      "priority": "HIGH",
+      "status": "pending",
+      "category": "trading",
+      "specRef": "PRD-001",
+      "flowRef": "UF-TRADE-003",
+      "description": "Build position viewing and management",
+      "acceptanceCriteria": [
+        "Open positions display with real-time P/L",
+        "Positions can be filtered by status",
+        "Sell position action works",
+        "Position details expand on click"
+      ]
+    },
+    {
+      "id": "TASK-TRADE-005",
+      "title": "Implement Trade History",
+      "priority": "MEDIUM",
+      "status": "pending",
+      "category": "trading",
+      "specRef": "PRD-001",
+      "flowRef": "UF-TRADE-004",
+      "description": "Build trade history view with filters",
+      "acceptanceCriteria": [
+        "History shows paginated list",
+        "Filter by date/result works",
+        "Export functionality available",
+        "Summary statistics display"
+      ]
+    },
+    {
+      "id": "TASK-ADMIN-001",
+      "title": "Implement User Management",
+      "priority": "MEDIUM",
+      "status": "pending",
+      "category": "admin",
+      "specRef": "PRD-001",
+      "flowRef": "UF-ADMIN-001",
+      "description": "Build admin user management interface",
+      "acceptanceCriteria": [
+        "User list with search/filter",
+        "Role assignment works",
+        "Account status toggle works",
+        "User detail view shows all info"
+      ]
+    },
+    {
+      "id": "TASK-ADMIN-002",
+      "title": "Implement Product Management",
+      "priority": "MEDIUM",
+      "status": "pending",
+      "category": "admin",
+      "specRef": "PRD-001",
+      "flowRef": "UF-ADMIN-002",
+      "description": "Build admin product management interface",
+      "acceptanceCriteria": [
+        "Product CRUD operations work",
+        "Product categorization works",
+        "Status management (active/inactive) works",
+        "Pricing configuration saves"
+      ]
+    },
+    {
+      "id": "TASK-ADMIN-003",
+      "title": "Implement Plan Management",
+      "priority": "MEDIUM",
+      "status": "pending",
+      "category": "admin",
+      "specRef": "PRD-001",
+      "flowRef": "UF-ADMIN-003",
+      "description": "Build subscription plan management",
+      "acceptanceCriteria": [
+        "Plan CRUD operations work",
+        "Feature mapping per plan works",
+        "Pricing tiers configurable",
+        "Plan comparison view available"
+      ]
+    },
+    {
+      "id": "TASK-STATE-001",
+      "title": "Implement State Management",
+      "priority": "HIGH",
+      "status": "pending",
+      "category": "infrastructure",
+      "specRef": "STM-001",
+      "description": "Add Zustand state management",
+      "acceptanceCriteria": [
+        "Global state for user session",
+        "State for trading data",
+        "State for UI preferences",
+        "Persist critical state to localStorage"
+      ]
+    },
+    {
+      "id": "TASK-TEST-001",
+      "title": "Add Unit Tests",
+      "priority": "MEDIUM",
+      "status": "pending",
+      "category": "testing",
+      "specRef": "OPS-001",
+      "description": "Add unit tests for business logic",
+      "acceptanceCriteria": [
+        "Core utilities have 80%+ coverage",
+        "Auth operations tested",
+        "Trading operations tested"
+      ]
+    },
+    {
+      "id": "TASK-TEST-002",
+      "title": "Add Integration Tests",
+      "priority": "MEDIUM",
+      "status": "pending",
+      "category": "testing",
+      "specRef": "OPS-001",
+      "description": "Add integration tests for API routes",
+      "acceptanceCriteria": [
+        "Auth flows tested end-to-end",
+        "API routes tested with mocks",
+        "Database operations tested"
+      ]
+    },
+    {
+      "id": "TASK-TEST-003",
+      "title": "Add E2E Tests",
+      "priority": "MEDIUM",
+      "status": "pending",
+      "category": "testing",
+      "specRef": "OPS-001",
+      "description": "Add E2E tests for critical flows",
+      "acceptanceCriteria": [
+        "Login/logout flow tested",
+        "Trade execution flow tested",
+        "Admin operations tested"
+      ]
+    }
+  ],
+  "summary": {
+    "total": 15,
+    "high": 6,
+    "medium": 8,
+    "low": 1,
+    "categories": {
+      "authentication": 3,
+      "trading": 5,
+      "admin": 3,
+      "infrastructure": 1,
+      "testing": 3
+    }
+  }
+}

@@ -1,0 +1,403 @@
+{
+  "timestamp": "2026-03-29T00:43:50.281Z",
+  "overallScore": 79,
+  "averageScore": 79,
+  "categories": [
+    {
+      "category": "📁 Monorepo Structure",
+      "checks": [
+        {
+          "name": "apps/ directory exists",
+          "status": "PASS",
+          "message": "apps/ found"
+        },
+        {
+          "name": "apps/core (main app) exists",
+          "status": "PASS",
+          "message": "apps/core found"
+        },
+        {
+          "name": "Tenant apps exist",
+          "status": "PASS",
+          "message": "2+ tenant apps found"
+        },
+        {
+          "name": "libs/shared directory (Nx pattern)",
+          "status": "PASS",
+          "message": "libs/shared found (Nx structure)"
+        },
+        {
+          "name": "All required shared packages exist",
+          "status": "PASS",
+          "message": "5/5 found: shared-supabase, shared-auth, shared-config, shared-types, deriv-api"
+        },
+        {
+          "name": "supabase/ directory exists",
+          "status": "PASS",
+          "message": "supabase/ found"
+        }
+      ],
+      "categoryScore": 100,
+      "weight": 0.15
+    },
+    {
+      "category": "🔧 Tech Stack & Dependencies",
+      "checks": [
+        {
+          "name": "next dependency",
+          "status": "PASS",
+          "message": "v^16.1.6"
+        },
+        {
+          "name": "react dependency",
+          "status": "PASS",
+          "message": "v^19.2.4"
+        },
+        {
+          "name": "typescript dependency",
+          "status": "PASS",
+          "message": "v~5.9.2"
+        },
+        {
+          "name": "tailwindcss dependency",
+          "status": "PASS",
+          "message": "v^4.2.1"
+        },
+        {
+          "name": "@hookform/resolvers dependency",
+          "status": "PASS",
+          "message": "v^3.10.0"
+        },
+        {
+          "name": "react-hook-form dependency",
+          "status": "PASS",
+          "message": "v^7.72.0"
+        },
+        {
+          "name": "zod dependency",
+          "status": "PASS",
+          "message": "v^4.3.6"
+        },
+        {
+          "name": "@supabase/supabase-js dependency",
+          "status": "PASS",
+          "message": "v^2.100.1"
+        },
+        {
+          "name": "nx dependency",
+          "status": "PASS",
+          "message": "v22.6.3"
+        },
+        {
+          "name": "tsconfig.json exists",
+          "status": "PASS",
+          "message": "tsconfig.json found"
+        },
+        {
+          "name": "tailwind.config.ts exists",
+          "status": "WARN",
+          "message": "Check if using Tailwind v4"
+        }
+      ],
+      "categoryScore": 91,
+      "weight": 0.12
+    },
+    {
+      "category": "🔐 Authentication & Security",
+      "checks": [
+        {
+          "name": "shared-auth package exists",
+          "status": "PASS",
+          "message": "Auth package found"
+        },
+        {
+          "name": "Auth helpers directory exists",
+          "status": "PASS",
+          "message": "Auth helpers found"
+        },
+        {
+          "name": "withAuth guard implemented",
+          "status": "FAIL",
+          "message": "withAuth missing"
+        },
+        {
+          "name": "withAdmin guard implemented",
+          "status": "FAIL",
+          "message": "withAdmin missing"
+        },
+        {
+          "name": "withTenant guard implemented",
+          "status": "FAIL",
+          "message": "withTenant missing"
+        },
+        {
+          "name": "MFA endpoints exist",
+          "status": "WARN",
+          "message": "0 MFA files found"
+        },
+        {
+          "name": "middleware.ts exists",
+          "status": "PASS",
+          "message": "Middleware found"
+        }
+      ],
+      "categoryScore": 43,
+      "weight": 0.15
+    },
+    {
+      "category": "🗄️ Database Schema",
+      "checks": [
+        {
+          "name": "supabase/migrations/ exists",
+          "status": "PASS",
+          "message": "Migrations found"
+        },
+        {
+          "name": "SQL migration files exist",
+          "status": "PASS",
+          "message": "11 migration files found"
+        },
+        {
+          "name": "Required tables exist in migrations",
+          "status": "PASS",
+          "message": "6/6 tables: tenants, profiles, tenant_memberships, deriv_tokens, feature_flags, subscription_plans"
+        },
+        {
+          "name": "RLS policies defined",
+          "status": "PASS",
+          "message": "RLS policies found"
+        },
+        {
+          "name": "RPC functions defined",
+          "status": "PASS",
+          "message": "RPC functions found"
+        }
+      ],
+      "categoryScore": 100,
+      "weight": 0.15
+    },
+    {
+      "category": "🔌 API Endpoints & Handlers",
+      "checks": [
+        {
+          "name": "API routes directory exists",
+          "status": "PASS",
+          "message": "API routes found"
+        },
+        {
+          "name": "API route files exist",
+          "status": "PASS",
+          "message": "10 route handlers found"
+        },
+        {
+          "name": "Trading execute endpoint",
+          "status": "PASS",
+          "message": "Found"
+        },
+        {
+          "name": "Stripe webhook endpoint",
+          "status": "WARN",
+          "message": "Not implemented yet"
+        },
+        {
+          "name": "Stripe checkout endpoint",
+          "status": "PASS",
+          "message": "Found"
+        },
+        {
+          "name": "MFA endpoints",
+          "status": "PASS",
+          "message": "Found"
+        },
+        {
+          "name": "Error response utility",
+          "status": "WARN",
+          "message": "error handling utilities"
+        },
+        {
+          "name": "Error logger utility",
+          "status": "WARN",
+          "message": "logging utilities"
+        }
+      ],
+      "categoryScore": 63,
+      "weight": 0.12
+    },
+    {
+      "category": "🎨 UI Components & Theme",
+      "checks": [
+        {
+          "name": "UI components directory exists",
+          "status": "PASS",
+          "message": "UI components found"
+        },
+        {
+          "name": "shadcn/ui primitives installed",
+          "status": "WARN",
+          "message": "0 component files found (spec: 47+)"
+        },
+        {
+          "name": "Layout components exist",
+          "status": "PASS",
+          "message": "Layout components found"
+        },
+        {
+          "name": "Form field wrappers exist",
+          "status": "PASS",
+          "message": "Form components found"
+        },
+        {
+          "name": "Feature components exist",
+          "status": "PASS",
+          "message": "Domain-specific components found"
+        },
+        {
+          "name": "Theme CSS variables defined",
+          "status": "WARN",
+          "message": "CSS theme system missing"
+        }
+      ],
+      "categoryScore": 67,
+      "weight": 0.12
+    },
+    {
+      "category": "📄 Pages & Routes",
+      "checks": [
+        {
+          "name": "app/ directory (Next.js App Router) exists",
+          "status": "PASS",
+          "message": "App Router found"
+        },
+        {
+          "name": "Auth routes (auth)",
+          "status": "PASS",
+          "message": "auth/ found"
+        },
+        {
+          "name": "Protected app routes ((app))",
+          "status": "PASS",
+          "message": "(app)/ found"
+        },
+        {
+          "name": "Dashboard page (overview)",
+          "status": "WARN",
+          "message": "overview/ missing"
+        },
+        {
+          "name": "Page files implemented",
+          "status": "PASS",
+          "message": "11 pages found"
+        }
+      ],
+      "categoryScore": 80,
+      "weight": 0.1
+    },
+    {
+      "category": "🔗 External Integrations",
+      "checks": [
+        {
+          "name": "deriv-api package exists",
+          "status": "PASS",
+          "message": "Deriv API package found"
+        },
+        {
+          "name": "Deriv React hooks",
+          "status": "PASS",
+          "message": "Custom hooks found"
+        },
+        {
+          "name": "Stripe integration code",
+          "status": "WARN",
+          "message": "0 Stripe files found"
+        },
+        {
+          "name": "shared-config package exists",
+          "status": "PASS",
+          "message": "Config package found"
+        },
+        {
+          "name": "Supabase client factories",
+          "status": "PASS",
+          "message": "Client factories found"
+        }
+      ],
+      "categoryScore": 80,
+      "weight": 0.12
+    },
+    {
+      "category": "📚 Documentation",
+      "checks": [
+        {
+          "name": "docs/ directory exists",
+          "status": "PASS",
+          "message": "docs/ found"
+        },
+        {
+          "name": "specifications.md exists",
+          "status": "PASS",
+          "message": "specifications.md found"
+        },
+        {
+          "name": "implementation-plan.md exists",
+          "status": "PASS",
+          "message": "implementation-plan.md found"
+        },
+        {
+          "name": "project-documentation.md exists",
+          "status": "PASS",
+          "message": "project-documentation.md found"
+        },
+        {
+          "name": "CLAUDE.md exists",
+          "status": "PASS",
+          "message": "CLAUDE.md found"
+        },
+        {
+          "name": "README.md exists",
+          "status": "PASS",
+          "message": "README found"
+        }
+      ],
+      "categoryScore": 100,
+      "weight": 0.1
+    },
+    {
+      "category": "✅ Testing & Quality",
+      "checks": [
+        {
+          "name": "Jest or Vitest configured",
+          "status": "PASS",
+          "message": "Jest: true, Vitest files: 3"
+        },
+        {
+          "name": "Test files exist",
+          "status": "WARN",
+          "message": "0 test files found"
+        },
+        {
+          "name": "E2E tests configured (Playwright)",
+          "status": "PASS",
+          "message": "E2E directory: true, spec files: 2"
+        }
+      ],
+      "categoryScore": 67,
+      "weight": 0.08
+    }
+  ],
+  "criticalIssues": [],
+  "warnings": [
+    "[🔧 Tech Stack & Dependencies] tailwind.config.ts exists: Check if using Tailwind v4",
+    "[🔐 Authentication & Security] withAuth guard implemented: withAuth missing",
+    "[🔐 Authentication & Security] withAdmin guard implemented: withAdmin missing",
+    "[🔐 Authentication & Security] withTenant guard implemented: withTenant missing",
+    "[🔐 Authentication & Security] MFA endpoints exist: 0 MFA files found",
+    "[🔌 API Endpoints & Handlers] Stripe webhook endpoint: Not implemented yet",
+    "[🔌 API Endpoints & Handlers] Error response utility: error handling utilities",
+    "[🔌 API Endpoints & Handlers] Error logger utility: logging utilities",
+    "[🎨 UI Components & Theme] shadcn/ui primitives installed: 0 component files found (spec: 47+)",
+    "[🎨 UI Components & Theme] Theme CSS variables defined: CSS theme system missing",
+    "[📄 Pages & Routes] Dashboard page (overview): overview/ missing",
+    "[🔗 External Integrations] Stripe integration code: 0 Stripe files found",
+    "[✅ Testing & Quality] Test files exist: 0 test files found"
+  ]
+}

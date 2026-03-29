@@ -3,7 +3,12 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "prepare": "husky"
+    "prepare": "husky",
+    "test": "nx run-many --target=test --all --passWithNoTests",
+    "build": "nx run-many --target=build --all",
+    "dev": "nx run-many --target=dev --all",
+    "lint": "nx run-many --target=lint --all",
+    "typecheck": "tsc --noEmit"
   },
   "private": true,
   "devDependencies": {
@@ -38,7 +43,7 @@
     "jest-util": "^30.0.2",
     "jsonc-eslint-parser": "^2.1.0",
     "lint-staged": "^16.4.0",
-    "nx": "22.5.4",
+    "nx": "22.6.3",
     "prettier": "~3.6.2",
     "ts-jest": "^29.4.0",
     "ts-node": "10.9.1",
@@ -53,12 +58,16 @@
     "e2e"
   ],
   "dependencies": {
+    "@hookform/resolvers": "^3.10.0",
+    "@supabase/supabase-js": "^2.100.1",
     "@tailwindcss/postcss": "^4.2.1",
     "next": "^16.1.6",
     "postcss": "^8.5.8",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
+    "react-hook-form": "^7.72.0",
     "tailwindcss": "^4.2.1",
-    "yaml": "^2.8.3"
+    "yaml": "^2.8.3",
+    "zod": "^4.3.6"
   }
 }

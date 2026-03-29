@@ -9,5 +9,37 @@
   },
   "enabledPlugins": {
     "nx@nx-claude-plugins": true
-  }
+  },
+  "permissions": {
+    "allow": [
+      "*",
+      "Bash(*)",
+      "Bash",
+      "Edit",
+      "Write",
+      "Read",
+      "MultiEdit",
+      "Grep",
+      "WebFetch",
+      "WebSearch",
+      "mcp__chrome-devtools",
+      "mcp__exa",
+      "mcp__supabase-deriv-jules",
+      "mcp__context7",
+      "mcp__stripe",
+      "mcp__github",
+      "mcp__vercel",
+      "mcp__railway"
+    ]
+  },
+  "enabledMcpjsonServers": [
+    "chrome-devtools",
+    "context7",
+    "exa",
+    "github",
+    "supabase-deriv-jules",
+    "stripe",
+    "vercel",
+    "railway"
+  ]
 }
