@@ -10,6 +10,8 @@ const SECURITY_HEADERS = {
   'X-XSS-Protection': '1; mode=block',
   'Referrer-Policy': 'strict-origin-when-cross-origin',
   'Permissions-Policy': 'camera=(), microphone=(), geolocation=()',
+  // Only sent over HTTPS; instructs browsers to always use HTTPS for 1 year
+  'Strict-Transport-Security': 'max-age=31536000; includeSubDomains',
 };
 
 /**
