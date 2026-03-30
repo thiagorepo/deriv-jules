@@ -1,3 +1,9 @@
+/**
+ * WARNING: In-memory rate limiter — development only.
+ * This Map is reset on every cold start and is NOT shared across serverless
+ * function instances. For production, replace with a Redis-backed solution
+ * such as Upstash Redis (@upstash/ratelimit) or ioredis.
+ */
 interface RateLimitInfo {
   count: number;
   lastReset: number;

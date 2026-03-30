@@ -1,8 +1,16 @@
 'use client';
 
-import { useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 import { useTheme } from '@org/theme';
 import { Button, Card } from './ui';
+
+interface InputFieldProps {
+  label: string;
+  type?: string;
+  value: string;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  placeholder?: string;
+}
 
 export function InputField({
   label,
@@ -10,7 +18,7 @@ export function InputField({
   value,
   onChange,
   placeholder,
-}: any) {
+}: InputFieldProps) {
   return (
     <div className="w-full mb-5">
       <label className="block mb-2 font-bold text-sm text-foreground">
@@ -28,12 +36,18 @@ export function InputField({
   );
 }
 
-export function LoginForm({ onSubmit, loading, error }: any) {
+interface LoginFormProps {
+  onSubmit: (credentials: { email: string; password: string }) => void;
+  loading?: boolean;
+  error?: string | null;
+}
+
+export function LoginForm({ onSubmit, loading, error }: LoginFormProps) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const theme: any = useTheme();
+  const theme = useTheme();
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     onSubmit({ email, password });
   };
@@ -55,14 +69,14 @@ export function LoginForm({ onSubmit, loading, error }: any) {
           label="Email Address"
           type="email"
           value={email}
-          onChange={(e: any) => setEmail((e.target as any).value)}
+          onChange={(e) => setEmail(e.target.value)}
           placeholder="you@example.com"
         />
         <InputField
           label="Password"
           type="password"
           value={password}
-          onChange={(e: any) => setPassword((e.target as any).value)}
+          onChange={(e) => setPassword(e.target.value)}
           placeholder="••••••••"
         />
 
@@ -89,13 +103,19 @@ export function LoginForm({ onSubmit, loading, error }: any) {
   );
 }
 
-export function RegisterForm({ onSubmit, loading, error }: any) {
+interface RegisterFormProps {
+  onSubmit: (data: { name: string; email: string; password: string }) => void;
+  loading?: boolean;
+  error?: string | null;
+}
+
+export function RegisterForm({ onSubmit, loading, error }: RegisterFormProps) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const theme: any = useTheme();
+  const theme = useTheme();
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     onSubmit({ name, email, password });
   };
@@ -117,21 +137,21 @@ export function RegisterForm({ onSubmit, loading, error }: any) {
           label="Full Name"
           type="text"
           value={name}
-          onChange={(e: any) => setName((e.target as any).value)}
+          onChange={(e) => setName(e.target.value)}
           placeholder="John Doe"
         />
         <InputField
           label="Email Address"
           type="email"
           value={email}
-          onChange={(e: any) => setEmail((e.target as any).value)}
+          onChange={(e) => setEmail(e.target.value)}
           placeholder="you@example.com"
         />
         <InputField
           label="Password"
           type="password"
           value={password}
-          onChange={(e: any) => setPassword((e.target as any).value)}
+          onChange={(e) => setPassword(e.target.value)}
           placeholder="••••••••"
         />
 

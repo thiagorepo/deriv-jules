@@ -5,7 +5,7 @@ import { Card, Button } from './ui';
 import { useTheme } from '@org/theme';
 
 export function UserPlans() {
-  const theme: any = useTheme();
+  const theme = useTheme();
 
   const [currentPlan, setCurrentPlan] = useState('Pro');
 
@@ -30,8 +30,8 @@ export function UserPlans() {
     },
   ];
 
-  const handleSubscribe = (name: any) => {
-    (globalThis as any).alert(`Successfully upgraded to the ${name} plan!`);
+  const handleSubscribe = (name: string) => {
+    globalThis.alert?.(`Successfully upgraded to the ${name} plan!`);
     setCurrentPlan(name);
   };
 

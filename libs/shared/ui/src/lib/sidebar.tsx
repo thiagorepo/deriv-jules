@@ -1,10 +1,23 @@
 'use client';
 
+import { Dispatch, SetStateAction } from 'react';
 import { useTheme } from '@org/theme';
 import { XMarkIcon } from './icons';
+import type { UserRole } from '@org/shared-types';
 
-export function Sidebar({ userRole, isOpen, setIsOpen, featureFlags }: any) {
-  const theme: any = useTheme();
+interface FeatureFlags {
+  [key: string]: boolean;
+}
+
+interface SidebarProps {
+  userRole: UserRole;
+  isOpen: boolean;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
+  featureFlags?: FeatureFlags;
+}
+
+export function Sidebar({ userRole, isOpen, setIsOpen, featureFlags }: SidebarProps) {
+  const theme = useTheme();
 
   const adminLinks: Array<{name: string, href: string, flag?: string}> = [
     { name: 'Dashboard', href: '/admin' },

@@ -18,6 +18,8 @@ const nextConfig = {
   transpilePackages: [
     '@org/shared-config',
     '@org/shared-auth',
+    '@org/shared-supabase',
+    '@org/shared-types',
     '@org/supabase',
     '@org/ui',
     '@org/theme',

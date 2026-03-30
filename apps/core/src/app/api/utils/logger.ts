@@ -3,12 +3,12 @@ export interface LogContext {
   method: string;
   userId?: string;
   timestamp: string;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 export function createLogger(context: LogContext) {
   return {
-    info: (message: string, meta?: Record<string, any>) => {
+    info: (message: string, meta?: Record<string, unknown>) => {
       console.log(
         JSON.stringify({
           level: 'info',
@@ -19,7 +19,7 @@ export function createLogger(context: LogContext) {
         }),
       );
     },
-    error: (message: string, error?: Error, meta?: Record<string, any>) => {
+    error: (message: string, error?: Error, meta?: Record<string, unknown>) => {
       console.error(
         JSON.stringify({
           level: 'error',
@@ -37,7 +37,7 @@ export function createLogger(context: LogContext) {
         }),
       );
     },
-    warn: (message: string, meta?: Record<string, any>) => {
+    warn: (message: string, meta?: Record<string, unknown>) => {
       console.warn(
         JSON.stringify({
           level: 'warn',

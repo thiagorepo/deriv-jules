@@ -1,4 +1,6 @@
-export function MenuIcon(props: any) {
+import { SVGProps } from 'react';
+
+export function MenuIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -18,7 +20,7 @@ export function MenuIcon(props: any) {
   );
 }
 
-export function XMarkIcon(props: any) {
+export function XMarkIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

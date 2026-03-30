@@ -103,6 +103,12 @@ function verifyAuthToken(token: string): boolean {
 /**
  * In-memory rate limiting store
  * Key: IP address, Value: { count, resetTime }
+ *
+ * WARNING: This is a development-only implementation. In-memory stores are
+ * reset on every cold start and are NOT shared across serverless instances.
+ * For production deployments replace this with a Redis-backed solution
+ * such as Upstash Redis (@upstash/ratelimit) to ensure correct behaviour
+ * across all instances and edge regions.
  */
 const rateLimitStore = new Map<string, { count: number; resetTime: number }>();
 const RATE_LIMIT_WINDOW = 60 * 1000; // 1 minute
@@ -229,9 +235,17 @@ export async function middleware(request: NextRequest) {
         return NextResponse.redirect(url);
       }
 
-      // Authenticated user: set auth context headers for server components
+      // Authenticated: pass only a user-identifier header (never the raw JWT)
+      // The token's sub (user-id) is read from the decoded payload for safe forwarding.
       if (token) {
-        response.headers.set('x-auth-token', token);
+        try {
+          const payload = JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString());
+          if (payload?.sub) {
+            response.headers.set('x-user-id', payload.sub);
+          }
+        } catch {
+          // Ignore decode errors — authentication was already verified above
+        }
       }
     }
   }

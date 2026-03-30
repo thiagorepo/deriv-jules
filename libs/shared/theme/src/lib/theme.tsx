@@ -2,11 +2,22 @@
 
 import { createContext, useContext, CSSProperties } from 'react';
 
-// Theme Context allows components to read dynamic tenant configuration
-// (like the tenant name or specific primary color) even if they aren't server rendered.
-const ThemeContext = createContext({});
+export interface ThemeConfig {
+  tenantName?: string;
+  colors?: {
+    primary?: string;
+    secondary?: string;
+  };
+}
 
-export function ThemeProvider({ initialTheme, children }: any) {
+interface ThemeProviderProps {
+  initialTheme: ThemeConfig;
+  children: React.ReactNode;
+}
+
+const ThemeContext = createContext<ThemeConfig>({});
+
+export function ThemeProvider({ initialTheme, children }: ThemeProviderProps) {
   // Apply dynamic CSS variables for the tenant's primary color, overriding the tailwind defaults
   // This allows Tailwind classes like `bg-primary` to still work while dynamically using the tenant color
   const dynamicStyles: CSSProperties = {
@@ -24,6 +35,6 @@ export function ThemeProvider({ initialTheme, children }: any) {
   );
 }
 
-export function useTheme() {
+export function useTheme(): ThemeConfig {
   return useContext(ThemeContext);
 }

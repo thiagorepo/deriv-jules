@@ -7,6 +7,27 @@
         "command": "next dev -p 3004"
       },
       "executor": "nx:run-commands"
+    },
+    "build": {
+      "options": {
+        "cwd": "apps/tenant-app-4",
+        "command": "next build"
+      },
+      "executor": "nx:run-commands"
+    },
+    "start": {
+      "options": {
+        "cwd": "apps/tenant-app-4",
+        "command": "next start -p 3004"
+      },
+      "executor": "nx:run-commands"
+    },
+    "lint": {
+      "options": {
+        "cwd": "apps/tenant-app-4",
+        "command": "eslint ."
+      },
+      "executor": "nx:run-commands"
     }
   }
 }

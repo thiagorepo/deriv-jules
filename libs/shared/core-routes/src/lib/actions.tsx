@@ -44,7 +44,7 @@ export async function authenticateUser(
   });
 
   if (error) {
-    return { error: (error as any).message };
+    return { error: (error as Error).message ?? 'Authentication failed' };
   }
 
   // Determine Role based on email

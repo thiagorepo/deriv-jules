@@ -5,7 +5,7 @@ import { Card, Button } from './ui';
 import { useTheme } from '@org/theme';
 
 export function AdminPlans() {
-  const theme: any = useTheme();
+  const theme = useTheme();
   const [plans, setPlans] = useState([
     {
       id: 1,
