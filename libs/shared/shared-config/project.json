@@ -22,6 +22,9 @@
         "jestConfig": "libs/shared/shared-config/jest.config.cts",
         "passWithNoTests": true
       }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
     }
   }
 }

@@ -1,10 +1,10 @@
-module.exports = {
-  displayName: '@org/core-routes',
-  preset: '../../../jest.preset.js',
+export default {
+  displayName: '@org/shared-types',
+  preset: '../../../jest.preset',
   testEnvironment: 'node',
   transform: {
     '^.+\\.[tj]s$': ['ts-jest', { tsconfig: '<rootDir>/tsconfig.spec.json' }],
   },
   moduleFileExtensions: ['ts', 'js'],
-  coverageDirectory: 'test-output/jest/coverage',
+  coverageDirectory: '../../../coverage/libs/shared/shared-types',
 };

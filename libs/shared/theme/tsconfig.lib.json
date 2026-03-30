@@ -9,7 +9,6 @@
     "allowJs": true,
     "forceConsistentCasingInFileNames": true,
     "types": ["node"],
-    "jsx": "react-jsx",
     "jsx": "react-jsx"
   },
   "include": ["src/**/*.ts", "src/**/*.js", "src/**/*.tsx", "src/**/*.jsx"],
