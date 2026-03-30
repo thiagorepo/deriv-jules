@@ -25,6 +25,7 @@
       "@org/shared-supabase": ["libs/shared/shared-supabase/dist/index.js"],
       "@org/theme": ["libs/shared/theme/dist/index.js"],
       "@org/shared-auth": ["libs/shared/shared-auth/dist/index.js"],
+      "@org/shared-types": ["libs/shared/shared-types/dist/index.js"],
       "@org/supabase": ["libs/shared/supabase/dist/index.js"],
       "@org/ui": ["libs/shared/ui/dist/index.js"]
     }

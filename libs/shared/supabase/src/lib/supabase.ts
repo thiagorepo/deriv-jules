@@ -154,3 +154,19 @@ export function createBrowserClient(supabaseUrl: string, _supabaseKey: string) {
     },
   };
 }
+
+// Mock Stripe client for development.
+// Replace with `import Stripe from 'stripe'; export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)`
+// once the real Stripe SDK is added as a dependency.
+export const stripe = {
+  webhooks: {
+    constructEvent: (
+      _body: string,
+      _signature: string,
+      _secret: string
+    ): { type: string; data: { object: Record<string, unknown> } } => {
+      console.log('[Stripe Mock] constructEvent called — returning no-op event');
+      return { type: 'mock.event', data: { object: {} } };
+    },
+  },
+};
