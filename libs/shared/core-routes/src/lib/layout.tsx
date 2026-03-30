@@ -1,6 +1,7 @@
 // CSS imported at tenant level
+import React from 'react';
 
-export default function RootLayout({ children }: any) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   // Use a sensible default, this could later be wired up to be dynamic on the server
   const themeClass =
     process.env.NEXT_PUBLIC_THEME === 'light' ? 'light' : 'dark';

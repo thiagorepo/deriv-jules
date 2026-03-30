@@ -42,7 +42,7 @@ export default function LoginPage() {
         } = await supabase.auth.getSession();
         if (session) {
           // Already logged in! Redirect based on email domain
-          const email = (session as any).user?.email;
+          const email = (session as { user?: { email?: string } })?.user?.email;
           if (email && email.endsWith('@admin.com')) {
             router.push('/admin');
           } else {
@@ -55,7 +55,7 @@ export default function LoginPage() {
     }
   }, [router, supabaseUrl, supabaseKey, tenantConfig.loginRedirect]);
 
-  const handleLogin = async ({ email, password }: any) => {
+  const handleLogin = async ({ email, password }: { email: string; password: string }) => {
     setLoading(true);
     setError('');
 
@@ -71,7 +71,7 @@ export default function LoginPage() {
         password,
       });
       if (signInError) {
-        setError((signInError as any).message);
+        setError((signInError as Error).message ?? 'Sign in failed');
         setLoading(false);
         return;
       }

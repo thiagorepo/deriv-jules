@@ -5,8 +5,8 @@ import { Card, Button } from './ui';
 import { useTheme } from '@org/theme';
 
 export function UserMarketplace() {
-  const theme: any = useTheme();
-  const [purchasing, setPurchasing] = useState(null);
+  const theme = useTheme();
+  const [purchasing, setPurchasing] = useState<number | null>(null);
 
   const products = [
     {
@@ -39,11 +39,11 @@ export function UserMarketplace() {
     },
   ];
 
-  const handlePurchase = (id: any) => {
+  const handlePurchase = (id: number) => {
     setPurchasing(id);
     setTimeout(() => {
       setPurchasing(null);
-      (globalThis as any).alert(
+      globalThis.alert?.(
         'Purchase Successful! You can find this in your Purchases tab.'
       );
     }, 1500);

@@ -1,6 +1,7 @@
+import { NextRequest } from 'next/server';
 import { tenantMiddleware } from '@org/core-routes';
 
-export function middleware(request) {
+export function middleware(request: NextRequest) {
   return tenantMiddleware(request);
 }
 

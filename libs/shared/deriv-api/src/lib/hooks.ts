@@ -21,14 +21,19 @@ export function useDerivConnection(appId: string) {
     return { status, api };
 }
 
+interface BalanceMessage {
+  balance?: number;
+  currency?: string;
+}
+
 export function useDerivBalance(apiToken: string) {
-    const [balance, setBalance] = useState<any>(null);
+    const [balance, setBalance] = useState<BalanceMessage | null>(null);
     const api = createDerivApi();
 
     useEffect(() => {
-        const unsubscribe = api.subscribeMessages((data: any) => {
-            if (data.msg_type === 'balance') {
-                setBalance(data.balance);
+        const unsubscribe = api.subscribeMessages((data) => {
+            if (data['msg_type'] === 'balance') {
+                setBalance(data['balance'] as BalanceMessage);
             }
         });
 
@@ -51,13 +56,13 @@ export function useDerivBalance(apiToken: string) {
 }
 
 export function useDerivContracts() {
-   const [contracts, setContracts] = useState<any>(null);
+   const [contracts, setContracts] = useState<Record<string, unknown>[] | null>(null);
    const api = createDerivApi();
 
     useEffect(() => {
-        const unsubscribe = api.subscribeMessages((data: any) => {
-            if (data.msg_type === 'active_symbols') {
-                setContracts(data.active_symbols);
+        const unsubscribe = api.subscribeMessages((data) => {
+            if (data['msg_type'] === 'active_symbols') {
+                setContracts(data['active_symbols'] as Record<string, unknown>[]);
             }
         });
 
@@ -66,7 +71,7 @@ export function useDerivContracts() {
         };
     }, [api]);
 
-    const fetchContracts = (market: string = 'synthetic_index') => {
+    const fetchContracts = (_market: string = 'synthetic_index') => {
         api.send({ active_symbols: 'brief', product_type: 'basic' });
     };
 

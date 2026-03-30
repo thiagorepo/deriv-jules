@@ -1,17 +1,31 @@
 // Placeholders for @supabase/ssr library functionality
 
-/**
- * @typedef {Object} SupabaseQueryBuilder
- * @property {function(string, string): SupabaseQueryBuilder} eq
- * @property {function(): SupabaseQueryBuilder} single
- * @property {function(function, function): void} then
- */
+interface Credentials {
+  email: string;
+  password: string;
+}
+
+interface OAuthParams {
+  provider: string;
+}
+
+interface MockTenant {
+  domain: string;
+  theme: string;
+  primaryColor: string;
+  tenantName: string;
+}
+
+interface QueryResult<T> {
+  data: T;
+  error: { message: string } | null;
+}
 
 // 1. Used in Next.js Server Components, Actions, Route Handlers (Requires Cookies)
 export function createServerClient(
   supabaseUrl: string,
   _supabaseKey: string,
-  _cookieStore: any
+  _cookieStore: unknown
 ) {
   console.log(`[Supabase SSR] Initializing SSR client for URL: ${supabaseUrl}`);
 
@@ -25,11 +39,11 @@ export function createServerClient(
           error: { message: 'Not authenticated' },
         };
       },
-      signInWithPassword: async (credentials: any) => {
+      signInWithPassword: async (credentials: Credentials) => {
         console.log('[Supabase SSR Auth] Attempting sign in with password...');
         return { data: { user: { email: credentials.email } }, error: null };
       },
-      signUp: async (credentials: any) => {
+      signUp: async (credentials: Credentials) => {
           console.log('[Supabase SSR Auth] Attempting sign up...');
           return { data: { user: { email: credentials.email } }, error: null };
       },
@@ -40,31 +54,27 @@ export function createServerClient(
     },
     from: (table: string) => {
       return {
-        /**
-         * @param {string} [query='*']
-         * @returns {SupabaseQueryBuilder}
-         */
         select: (query = '*') => {
           console.log(`[Supabase SSR DB] Selecting ${query} from ${table}...`);
-          // Chainable builder for mock Supabase client
-          const builder: any = {
-            _domainFilter: null,
+
+          let domainFilter: string | null = null;
+
+          const builder = {
             eq: function (column: string, value: string) {
               if (column === 'domain') {
-                this._domainFilter = value;
+                domainFilter = value;
               }
               return this;
             },
             single: function () {
-              return this; // Keep chaining
+              return this;
             },
             then: function (
-              resolve: (value: any) => void,
-              _reject: (reason?: any) => void
+              resolve: (value: QueryResult<MockTenant[] | unknown[]>) => void,
+              _reject: (reason?: unknown) => void
             ) {
-              // Execute query when awaited
               if (table === 'tenants') {
-                const mockTenants = [
+                const mockTenants: MockTenant[] = [
                   {
                     domain: 'localhost:3000',
                     theme: 'dark',
@@ -85,12 +95,9 @@ export function createServerClient(
                   },
                 ];
 
-                let result = mockTenants;
-                if (this._domainFilter) {
-                  result = mockTenants.filter(
-                    (t) => t.domain === this._domainFilter
-                  );
-                }
+                const result = domainFilter
+                  ? mockTenants.filter((t) => t.domain === domainFilter)
+                  : mockTenants;
 
                 resolve({ data: result, error: null });
               } else {
@@ -113,17 +120,17 @@ export function createBrowserClient(supabaseUrl: string, _supabaseKey: string) {
 
   return {
     auth: {
-      signInWithOAuth: async ({ provider }: any) => {
+      signInWithOAuth: async ({ provider }: OAuthParams) => {
         console.log(
           `[Supabase CSR Auth] Attempting sign in with ${provider}...`
         );
         return { data: { url: '/mock-auth-callback' }, error: null };
       },
-      signInWithPassword: async (credentials: any) => {
+      signInWithPassword: async (credentials: Credentials) => {
         console.log('[Supabase CSR Auth] Attempting sign in with password...');
         return { data: { user: { email: credentials.email } }, error: null };
       },
-      signUp: async (credentials: any) => {
+      signUp: async (credentials: Credentials) => {
           console.log('[Supabase CSR Auth] Attempting sign up...');
           return { data: { user: { email: credentials.email } }, error: null };
       },

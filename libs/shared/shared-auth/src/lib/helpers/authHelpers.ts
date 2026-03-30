@@ -9,7 +9,7 @@ const getSupabase = () => createBrowserClient(
 export const signIn = async (email: string, password?: string, provider?: string) => {
   const supabase = getSupabase();
   if (provider) {
-    return supabase.auth.signInWithOAuth({ provider: provider as any });
+    return supabase.auth.signInWithOAuth({ provider });
   }
   return supabase.auth.signInWithPassword({ email, password: password || '' });
 };

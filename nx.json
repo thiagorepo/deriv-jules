@@ -3,34 +3,6 @@
   "sync": {
     "applyChanges": true
   },
-  "targetDefaults": {
-    "build": {
-      "dependsOn": ["^build"]
-    }
-  },
-  "plugins": [
-    {
-      "plugin": "@nx/js/typescript",
-      "options": {
-        "typecheck": {
-          "targetName": "typecheck"
-        },
-        "build": {
-          "targetName": "build",
-          "configName": "tsconfig.lib.json",
-          "buildDepsName": "build-deps",
-          "watchDepsName": "watch-deps"
-        }
-      }
-    }
-  ],
-  "generatorDefaults": {
-    "@nx/js": {
-      "library": {
-        "skipLint": false
-      }
-    }
-  },
   "namedInputs": {
     "default": ["{projectRoot}/**/*", "sharedGlobals"],
     "production": [
@@ -49,7 +21,9 @@
     {
       "plugin": "@nx/js/typescript",
       "options": {
-        "typecheck": null,
+        "typecheck": {
+          "targetName": "typecheck"
+        },
         "build": {
           "targetName": "build",
           "configName": "tsconfig.lib.json",
@@ -95,14 +69,33 @@
       }
     }
   },
+  "generatorDefaults": {
+    "@nx/js": {
+      "library": {
+        "skipLint": false
+      }
+    }
+  },
   "targetDefaults": {
+    "build": {
+      "dependsOn": ["^build"]
+    },
     "@nx/js:tsc": {
       "cache": true,
       "dependsOn": ["^build"],
       "inputs": ["production", "^production"]
     },
     "test": {
+      "cache": true,
       "dependsOn": ["^build"]
+    },
+    "lint": {
+      "cache": true,
+      "inputs": [
+        "default",
+        "{workspaceRoot}/.eslintrc.json",
+        "{workspaceRoot}/eslint.config.mjs"
+      ]
     }
   }
 }

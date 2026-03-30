@@ -1,5 +1,0 @@
-# Security utilities
-# - Auth middleware
-# - CSRF protection
-# - Rate limiting
-# - Security headers

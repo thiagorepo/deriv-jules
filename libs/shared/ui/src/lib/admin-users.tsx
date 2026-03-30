@@ -1,11 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { Card, Button } from './ui';
 import { useTheme } from '@org/theme';
 
 export function AdminUsers() {
-  const theme: any = useTheme();
+  const theme = useTheme();
 
   // Mock Data
   const [users] = useState([
@@ -82,7 +82,7 @@ export function AdminUsers() {
             type="text"
             placeholder="Search users..."
             value={searchTerm}
-            onChange={(e: any) => setSearchTerm((e.target as any).value)}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => setSearchTerm(e.target.value)}
             className="p-2 min-h-[44px] text-base rounded-md border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring w-full sm:w-64"
           />
           <Button variant="primary" className="whitespace-nowrap">
