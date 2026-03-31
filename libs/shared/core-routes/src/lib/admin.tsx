@@ -13,7 +13,7 @@ const getTenantConfig = () => ({
 // Notice we no longer have useEffect or router redirects here.
 // If the user reaches this component, the Middleware has ALREADY guaranteed
 // they are an authenticated Admin.
-async function BaseAdminPage({ user }: any) {
+async function BaseAdminPage({ user }: { user: { email?: string } }) {
   const tenantConfig = getTenantConfig();
 
   const resolvedTheme = {

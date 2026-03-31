@@ -12,6 +12,14 @@ export interface TenantTheme {
   favicon?: string;
 }
 
+export interface ThemeConfig {
+  tenantName?: string;
+  colors?: {
+    primary?: string;
+    secondary?: string;
+  };
+}
+
 interface ThemeProviderProps {
   initialTheme: TenantTheme;
   children: React.ReactNode;

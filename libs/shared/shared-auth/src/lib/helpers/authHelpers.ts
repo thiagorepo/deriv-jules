@@ -1,15 +1,20 @@
 import { createBrowserClient } from '@org/supabase';
 
 // Assuming these are called from client components
-const getSupabase = () => createBrowserClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
+const getSupabase = () =>
+  createBrowserClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+  );
 
-export const signIn = async (email: string, password?: string, provider?: string) => {
+export const signIn = async (
+  email: string,
+  password?: string,
+  provider?: string,
+) => {
   const supabase = getSupabase();
   if (provider) {
-    return supabase.auth.signInWithOAuth({ provider: provider as any });
+    return supabase.auth.signInWithOAuth({ provider });
   }
   return supabase.auth.signInWithPassword({ email, password: password || '' });
 };

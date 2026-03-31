@@ -2,9 +2,14 @@
 
 import { useTheme } from '@org/theme';
 import { Card, Button } from './ui';
+import type { AppUser } from '@org/shared-types';
 
-export function AdminDashboard({ user }: any) {
-  const theme: any = useTheme();
+interface DashboardProps {
+  user: AppUser;
+}
+
+export function AdminDashboard({ user }: DashboardProps) {
+  const theme = useTheme();
 
   return (
     <div className="max-w-6xl mx-auto space-y-6 md:space-y-8">
@@ -85,8 +90,8 @@ export function AdminDashboard({ user }: any) {
   );
 }
 
-export function UserDashboard({ user }: any) {
-  const theme: any = useTheme();
+export function UserDashboard({ user }: DashboardProps) {
+  const theme = useTheme();
 
   return (
     <div className="max-w-6xl mx-auto space-y-6 md:space-y-8">

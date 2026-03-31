@@ -10,6 +10,8 @@ const SECURITY_HEADERS = {
   'X-XSS-Protection': '1; mode=block',
   'Referrer-Policy': 'strict-origin-when-cross-origin',
   'Permissions-Policy': 'camera=(), microphone=(), geolocation=()',
+  // Only sent over HTTPS; instructs browsers to always use HTTPS for 1 year
+  'Strict-Transport-Security': 'max-age=31536000; includeSubDomains',
 };
 
 /**
@@ -104,12 +106,11 @@ function verifyAuthToken(token: string): boolean {
  * In-memory rate limiting store
  * Key: IP address, Value: { count, resetTime }
  *
- * ⚠️  SERVERLESS CAVEAT: Each serverless function instance has its own memory,
- * so this store is NOT shared across instances and resets on every cold start.
- * For production, replace with an edge-compatible store such as:
- *   - Upstash Redis (@upstash/ratelimit)
- *   - Vercel KV
- *   - Cloudflare KV
+ * WARNING: This is a development-only implementation. In-memory stores are
+ * reset on every cold start and are NOT shared across serverless instances.
+ * For production deployments replace this with a Redis-backed solution
+ * such as Upstash Redis (@upstash/ratelimit) to ensure correct behaviour
+ * across all instances and edge regions.
  */
 const rateLimitStore = new Map<string, { count: number; resetTime: number }>();
 const RATE_LIMIT_WINDOW = 60 * 1000; // 1 minute
@@ -236,10 +237,20 @@ export async function middleware(request: NextRequest) {
         return NextResponse.redirect(url);
       }
 
-      // Authenticated: pass a boolean signal to server components.
-      // Do NOT forward the raw JWT in a response header — that would
-      // expose it to client-side JavaScript and intermediary caches.
-      response.headers.set('x-authenticated', '1');
+      // Authenticated: pass only a user-identifier header (never the raw JWT)
+      // The token's sub (user-id) is read from the decoded payload for safe forwarding.
+      if (token) {
+        try {
+          const payload = JSON.parse(
+            Buffer.from(token.split('.')[1], 'base64').toString(),
+          );
+          if (payload?.sub) {
+            response.headers.set('x-user-id', payload.sub);
+          }
+        } catch {
+          // Ignore decode errors — authentication was already verified above
+        }
+      }
     }
   }
 

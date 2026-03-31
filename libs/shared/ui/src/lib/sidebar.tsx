@@ -1,9 +1,11 @@
 'use client';
 
+import { Dispatch, SetStateAction } from 'react';
 import { useTheme } from '@org/theme';
 import type { TenantTheme } from '@org/theme';
 import type { SidebarProps } from '@org/shared-types';
 import { XMarkIcon } from './icons';
+import type { UserRole } from '@org/shared-types';
 
 interface SidebarLink {
   name: string;

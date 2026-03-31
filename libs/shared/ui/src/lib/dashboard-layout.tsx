@@ -1,13 +1,28 @@
 'use client';
 
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 import { useTheme } from '@org/theme';
 import { Sidebar } from './sidebar';
 import { MenuIcon } from './icons';
+import type { UserRole } from '@org/shared-types';
 
-export function DashboardLayout({ children, userRole, featureFlags }: any) {
+interface FeatureFlags {
+  [key: string]: boolean;
+}
+
+interface DashboardLayoutProps {
+  children: ReactNode;
+  userRole: UserRole;
+  featureFlags?: FeatureFlags;
+}
+
+export function DashboardLayout({
+  children,
+  userRole,
+  featureFlags,
+}: DashboardLayoutProps) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const theme: any = useTheme();
+  const theme = useTheme();
 
   return (
     <div className="flex h-screen overflow-hidden bg-background w-full">

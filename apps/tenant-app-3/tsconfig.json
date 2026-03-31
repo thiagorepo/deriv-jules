@@ -49,6 +49,12 @@
   ],
   "references": [
     {
+      "path": "../../libs/shared/deriv-api"
+    },
+    {
+      "path": "../../libs/shared/ui"
+    },
+    {
       "path": "../../libs/shared/core-routes"
     }
   ]

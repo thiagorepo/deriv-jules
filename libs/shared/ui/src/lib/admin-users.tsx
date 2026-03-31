@@ -1,11 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { Card, Button } from './ui';
 import { useTheme } from '@org/theme';
 
 export function AdminUsers() {
-  const theme: any = useTheme();
+  const theme = useTheme();
 
   // Mock Data
   const [users] = useState([
@@ -61,7 +61,7 @@ export function AdminUsers() {
   const filteredUsers = users.filter(
     (u) =>
       u.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      u.email.toLowerCase().includes(searchTerm.toLowerCase())
+      u.email.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   return (
@@ -82,7 +82,9 @@ export function AdminUsers() {
             type="text"
             placeholder="Search users..."
             value={searchTerm}
-            onChange={(e: any) => setSearchTerm((e.target as any).value)}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              setSearchTerm(e.target.value)
+            }
             className="p-2 min-h-[44px] text-base rounded-md border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring w-full sm:w-64"
           />
           <Button variant="primary" className="whitespace-nowrap">
@@ -142,8 +144,8 @@ export function AdminUsers() {
                           user.status === 'Active'
                             ? 'bg-green-500/10 text-green-500 border-green-500/20'
                             : user.status === 'Suspended'
-                            ? 'bg-destructive/10 text-destructive border-destructive/20'
-                            : 'bg-yellow-500/10 text-yellow-500 border-yellow-500/20'
+                              ? 'bg-destructive/10 text-destructive border-destructive/20'
+                              : 'bg-yellow-500/10 text-yellow-500 border-yellow-500/20'
                         }`}
                       >
                         {user.status}

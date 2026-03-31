@@ -1,6 +1,27 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { stripe } from '@org/supabase';
 
+// Minimal shapes for Stripe event objects used in this handler.
+// Replace with `import Stripe from 'stripe'` and use Stripe.Checkout.Session,
+// Stripe.Invoice, and Stripe.Subscription once the real Stripe SDK is wired up.
+interface StripeCheckoutSession {
+  id: string;
+  customer: string | null;
+}
+
+interface StripeInvoice {
+  id: string;
+  amount_paid: number;
+  currency: string;
+  attempts_left?: number;
+}
+
+interface StripeSubscription {
+  id: string;
+  status: string;
+  canceled_at?: number | null;
+}
+
 /**
  * Stripe webhook handler
  * Handles webhook events from Stripe
@@ -35,23 +56,29 @@ export async function POST(req: NextRequest) {
     // Handle different webhook events
     switch (event.type) {
       case 'checkout.session.completed':
-        await handleCheckoutCompleted(event.data.object as any);
+        await handleCheckoutCompleted(
+          event.data.object as StripeCheckoutSession,
+        );
         break;
 
       case 'invoice.paid':
-        await handleInvoicePaid(event.data.object as any);
+        await handleInvoicePaid(event.data.object as StripeInvoice);
         break;
 
       case 'invoice.payment_failed':
-        await handleInvoicePaymentFailed(event.data.object as any);
+        await handleInvoicePaymentFailed(event.data.object as StripeInvoice);
         break;
 
       case 'customer.subscription.updated':
-        await handleSubscriptionUpdated(event.data.object as any);
+        await handleSubscriptionUpdated(
+          event.data.object as StripeSubscription,
+        );
         break;
 
       case 'customer.subscription.deleted':
-        await handleSubscriptionDeleted(event.data.object as any);
+        await handleSubscriptionDeleted(
+          event.data.object as StripeSubscription,
+        );
         break;
 
       default:
@@ -75,7 +102,7 @@ export async function POST(req: NextRequest) {
 /**
  * Handle checkout.session.completed event
  */
-async function handleCheckoutCompleted(session: any) {
+async function handleCheckoutCompleted(session: StripeCheckoutSession) {
   console.log('Checkout completed:', session.id);
 
   // TODO: Implement checkout completion logic
@@ -94,7 +121,7 @@ async function handleCheckoutCompleted(session: any) {
 /**
  * Handle invoice.paid event
  */
-async function handleInvoicePaid(invoice: any) {
+async function handleInvoicePaid(invoice: StripeInvoice) {
   console.log('Invoice paid:', invoice.id);
 
   // TODO: Implement invoice payment logic
@@ -114,7 +141,7 @@ async function handleInvoicePaid(invoice: any) {
 /**
  * Handle invoice.payment_failed event
  */
-async function handleInvoicePaymentFailed(invoice: any) {
+async function handleInvoicePaymentFailed(invoice: StripeInvoice) {
   console.log('Invoice payment failed:', invoice.id);
 
   // TODO: Implement payment failure logic
@@ -133,7 +160,7 @@ async function handleInvoicePaymentFailed(invoice: any) {
 /**
  * Handle customer.subscription.updated event
  */
-async function handleSubscriptionUpdated(subscription: any) {
+async function handleSubscriptionUpdated(subscription: StripeSubscription) {
   console.log('Subscription updated:', subscription.id);
 
   // TODO: Implement subscription update logic
@@ -151,7 +178,7 @@ async function handleSubscriptionUpdated(subscription: any) {
 /**
  * Handle customer.subscription.deleted event
  */
-async function handleSubscriptionDeleted(subscription: any) {
+async function handleSubscriptionDeleted(subscription: StripeSubscription) {
   console.log('Subscription deleted:', subscription.id);
 
   // TODO: Implement subscription cancellation logic

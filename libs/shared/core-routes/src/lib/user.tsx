@@ -11,7 +11,13 @@ const getTenantConfig = () => ({
   tenantName: process.env.NEXT_PUBLIC_TENANT_NAME || 'Default Platform',
 });
 
-async function BaseUserPage({ user, tenantId }: any) {
+async function BaseUserPage({
+  user,
+  tenantId,
+}: {
+  user: { email?: string };
+  tenantId: string;
+}) {
   const tenantConfig = getTenantConfig();
   const featureFlags = await getTenantFeatureFlags(tenantId);
 

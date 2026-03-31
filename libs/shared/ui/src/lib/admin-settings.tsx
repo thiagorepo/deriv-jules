@@ -1,25 +1,27 @@
 'use client';
 
-import { useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 import { Card, Button } from './ui';
 import { useTheme } from '@org/theme';
 import { InputField } from './auth-forms';
 
 export function AdminSettings() {
-  const theme: any = useTheme();
+  const theme = useTheme();
 
   // Mock form state based on current environment variables
-  const [platformName, setPlatformName] = useState(theme.tenantName);
-  const [primaryColor, setPrimaryColor] = useState(theme.colors.primary);
+  const [platformName, setPlatformName] = useState(theme.tenantName ?? '');
+  const [primaryColor, setPrimaryColor] = useState(
+    theme.colors?.primary ?? '#000000',
+  );
   const [themeMode, setThemeMode] = useState('dark');
   const [derivAppId, setDerivAppId] = useState('1089');
   const [webhookUrl, setWebhookUrl] = useState(
-    'https://api.example.com/webhooks/stripe'
+    'https://api.example.com/webhooks/stripe',
   );
   const [loading, setLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
 
-  const handleSave = (e: any) => {
+  const handleSave = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
     setSuccessMessage('');
@@ -28,7 +30,7 @@ export function AdminSettings() {
     setTimeout(() => {
       setLoading(false);
       setSuccessMessage(
-        'Tenant settings updated successfully. Changes will apply on the next page reload.'
+        'Tenant settings updated successfully. Changes will apply on the next page reload.',
       );
 
       // In a real scenario, this would trigger a revalidation of the Server Components
@@ -88,7 +90,9 @@ export function AdminSettings() {
             <InputField
               label="Platform Name"
               value={platformName}
-              onChange={(e: any) => setPlatformName((e.target as any).value)}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                setPlatformName(e.target.value)
+              }
               placeholder="e.g. My Brokerage"
             />
 
@@ -104,8 +108,8 @@ export function AdminSettings() {
                 <input
                   type="text"
                   value={primaryColor}
-                  onChange={(e: any) =>
-                    setPrimaryColor((e.target as any).value)
+                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                    setPrimaryColor(e.target.value)
                   }
                   className="w-full p-3 min-h-[48px] text-base rounded-md border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary uppercase font-mono"
                   required
@@ -120,7 +124,9 @@ export function AdminSettings() {
               </label>
               <select
                 value={themeMode}
-                onChange={(e: any) => setThemeMode((e.target as any).value)}
+                onChange={(e: ChangeEvent<HTMLSelectElement>) =>
+                  setThemeMode(e.target.value)
+                }
                 className="w-full p-3 min-h-[48px] text-base rounded-md border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
               >
                 <option value="dark">Dark Mode</option>
@@ -157,7 +163,9 @@ export function AdminSettings() {
               label="Deriv App ID"
               type="number"
               value={derivAppId}
-              onChange={(e: any) => setDerivAppId((e.target as any).value)}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                setDerivAppId(e.target.value)
+              }
               placeholder="e.g. 1089"
             />
 
@@ -165,7 +173,9 @@ export function AdminSettings() {
               label="Payment Webhook URL"
               type="url"
               value={webhookUrl}
-              onChange={(e: any) => setWebhookUrl((e.target as any).value)}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                setWebhookUrl(e.target.value)
+              }
               placeholder="https://..."
             />
           </div>
@@ -176,7 +186,7 @@ export function AdminSettings() {
           <Button
             variant="secondary"
             type="button"
-            onClick={() => (globalThis as any).window?.location.reload()}
+            onClick={() => globalThis.window?.location.reload()}
           >
             Discard Changes
           </Button>

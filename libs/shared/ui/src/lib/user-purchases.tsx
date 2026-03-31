@@ -4,7 +4,7 @@ import { Card, Button } from './ui';
 import { useTheme } from '@org/theme';
 
 export function UserPurchases() {
-  const theme: any = useTheme();
+  const theme = useTheme();
 
   const mockPurchases = [
     {

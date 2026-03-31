@@ -1,5 +1,4 @@
 // CSS imported at tenant level
-
 import React from 'react';
 
 export default function RootLayout({

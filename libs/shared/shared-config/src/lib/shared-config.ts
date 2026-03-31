@@ -1,3 +1,1 @@
-export function sharedConfig(): string {
-  return 'shared-config';
-}
+// Reserved for future shared configuration utilities

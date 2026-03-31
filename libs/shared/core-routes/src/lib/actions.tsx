@@ -17,7 +17,7 @@ import { createServerClient } from '@org/supabase';
 export async function authenticateUser(
   email: string,
   password: string,
-  redirectPath: string
+  redirectPath: string,
 ) {
   if (!email || password.length < 6) {
     return {
@@ -44,7 +44,7 @@ export async function authenticateUser(
   });
 
   if (error) {
-    return { error: (error as any).message };
+    return { error: (error as Error).message ?? 'Authentication failed' };
   }
 
   // Determine Role based on email

@@ -19,11 +19,13 @@
     "target": "es2022",
     "customConditions": ["@org/source"],
     "paths": {
-      "@org/core-routes": ["libs/shared/core-routes/dist/index.ts"],
-      "@org/deriv-api": ["libs/shared/deriv-api/dist/index.ts"],
+      "@org/core-routes": ["libs/shared/core-routes/dist/index.js"],
+      "@org/deriv-api": ["libs/shared/deriv-api/dist/index.js"],
       "@org/shared-config": ["libs/shared/shared-config/dist/index.js"],
+      "@org/shared-supabase": ["libs/shared/shared-supabase/dist/index.js"],
       "@org/theme": ["libs/shared/theme/dist/index.js"],
-      "@org/shared-auth": ["libs/shared/shared-auth/dist/src/index.js"],
+      "@org/shared-auth": ["libs/shared/shared-auth/dist/index.js"],
+      "@org/shared-types": ["libs/shared/shared-types/dist/index.js"],
       "@org/supabase": ["libs/shared/supabase/dist/index.js"],
       "@org/ui": ["libs/shared/ui/dist/index.js"]
     }

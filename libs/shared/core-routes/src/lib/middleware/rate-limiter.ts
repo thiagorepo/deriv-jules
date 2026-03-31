@@ -1,3 +1,9 @@
+/**
+ * WARNING: In-memory rate limiter — development only.
+ * This Map is reset on every cold start and is NOT shared across serverless
+ * function instances. For production, replace with a Redis-backed solution
+ * such as Upstash Redis (@upstash/ratelimit) or ioredis.
+ */
 interface RateLimitInfo {
   count: number;
   lastReset: number;
@@ -6,13 +12,13 @@ interface RateLimitInfo {
 const rateLimits = new Map<string, RateLimitInfo>();
 
 export function _getRateLimits() {
-    return rateLimits;
+  return rateLimits;
 }
 
 export function rateLimiter(
   ip: string,
-  limit: number = 100, // requests per window
-  windowMs: number = 60000 // 1 minute window
+  limit = 100, // requests per window
+  windowMs = 60000, // 1 minute window
 ): boolean {
   const now = Date.now();
   const info = rateLimits.get(ip) || { count: 0, lastReset: now };

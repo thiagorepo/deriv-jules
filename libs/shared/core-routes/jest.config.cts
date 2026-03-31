@@ -2,5 +2,9 @@ module.exports = {
   displayName: '@org/core-routes',
   preset: '../../../jest.preset.js',
   testEnvironment: 'node',
+  transform: {
+    '^.+\\.[tj]s$': ['ts-jest', { tsconfig: '<rootDir>/tsconfig.spec.json' }],
+  },
+  moduleFileExtensions: ['ts', 'js'],
   coverageDirectory: 'test-output/jest/coverage',
 };

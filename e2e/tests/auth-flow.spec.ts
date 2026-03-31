@@ -7,5 +7,7 @@ test('has title', async ({ page }) => {
 
 test('login flow', async ({ page }) => {
   await page.goto('/login');
-  await expect(page.getByRole('heading', { name: 'Log in to your account' })).toBeVisible();
+  await expect(
+    page.getByRole('heading', { name: 'Log in to your account' }),
+  ).toBeVisible();
 });
