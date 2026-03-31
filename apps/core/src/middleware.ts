@@ -103,6 +103,13 @@ function verifyAuthToken(token: string): boolean {
 /**
  * In-memory rate limiting store
  * Key: IP address, Value: { count, resetTime }
+ *
+ * ⚠️  SERVERLESS CAVEAT: Each serverless function instance has its own memory,
+ * so this store is NOT shared across instances and resets on every cold start.
+ * For production, replace with an edge-compatible store such as:
+ *   - Upstash Redis (@upstash/ratelimit)
+ *   - Vercel KV
+ *   - Cloudflare KV
  */
 const rateLimitStore = new Map<string, { count: number; resetTime: number }>();
 const RATE_LIMIT_WINDOW = 60 * 1000; // 1 minute
@@ -229,10 +236,10 @@ export async function middleware(request: NextRequest) {
         return NextResponse.redirect(url);
       }
 
-      // Authenticated user: set auth context headers for server components
-      if (token) {
-        response.headers.set('x-auth-token', token);
-      }
+      // Authenticated: pass a boolean signal to server components.
+      // Do NOT forward the raw JWT in a response header — that would
+      // expose it to client-side JavaScript and intermediary caches.
+      response.headers.set('x-authenticated', '1');
     }
   }
 

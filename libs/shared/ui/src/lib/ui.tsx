@@ -1,4 +1,11 @@
+import React from 'react';
 import { useTheme } from '@org/theme';
+import type { ThemeConfig } from '@org/shared-types';
+
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  variant?: 'primary' | 'secondary';
+  children: React.ReactNode;
+}
 
 export function Button({
   onClick,
@@ -6,7 +13,7 @@ export function Button({
   variant = 'primary',
   className = '',
   ...props
-}: any) {
+}: ButtonProps) {
   const variantStyles =
     variant === 'primary'
       ? 'bg-primary text-primary-foreground hover:bg-primary/90'
@@ -24,7 +31,11 @@ export function Button({
   );
 }
 
-export function Card({ children, className = '', ...props }: any) {
+interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
+  children: React.ReactNode;
+}
+
+export function Card({ children, className = '', ...props }: CardProps) {
   return (
     <div
       className={`p-4 md:p-6 lg:p-8 rounded-lg shadow-sm bg-card text-card-foreground border border-border ${className}`}
@@ -35,8 +46,12 @@ export function Card({ children, className = '', ...props }: any) {
   );
 }
 
-export function Header({ title }: any) {
-  const theme: any = useTheme();
+interface HeaderProps {
+  title?: string;
+}
+
+export function Header({ title }: HeaderProps) {
+  const theme = useTheme() as ThemeConfig;
   // Flex row for tablet/desktop, stacked column for very small screens
   return (
     <header className="p-4 md:p-6 border-b border-primary/20 flex flex-col sm:flex-row justify-between items-center sm:items-center space-y-4 sm:space-y-0 mb-8 w-full">

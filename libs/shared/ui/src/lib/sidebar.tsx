@@ -1,12 +1,25 @@
 'use client';
 
 import { useTheme } from '@org/theme';
+import type { TenantTheme } from '@org/theme';
+import type { SidebarProps } from '@org/shared-types';
 import { XMarkIcon } from './icons';
 
-export function Sidebar({ userRole, isOpen, setIsOpen, featureFlags }: any) {
-  const theme: any = useTheme();
+interface SidebarLink {
+  name: string;
+  href: string;
+  flag?: string;
+}
 
-  const adminLinks: Array<{name: string, href: string, flag?: string}> = [
+export function Sidebar({
+  userRole,
+  isOpen,
+  setIsOpen,
+  featureFlags,
+}: SidebarProps) {
+  const theme = useTheme() as TenantTheme;
+
+  const adminLinks: SidebarLink[] = [
     { name: 'Dashboard', href: '/admin' },
     { name: 'User Management', href: '/admin/users' },
     { name: 'Products & Store', href: '/admin/products' },
@@ -15,7 +28,7 @@ export function Sidebar({ userRole, isOpen, setIsOpen, featureFlags }: any) {
     { name: 'Settings', href: '/admin/settings' },
   ];
 
-  const userLinks: Array<{name: string, href: string, flag?: string}> = [
+  const userLinks: SidebarLink[] = [
     { name: 'Trading Platform', href: '/user', flag: 'trading' },
     { name: 'Marketplace', href: '/user/marketplace' },
     { name: 'My Purchases', href: '/user/purchases' },
@@ -27,13 +40,13 @@ export function Sidebar({ userRole, isOpen, setIsOpen, featureFlags }: any) {
     { name: 'Copy Trading', href: '/user/copy-trading', flag: 'copy_trading' },
   ];
 
-  let links = userRole === 'admin' ? adminLinks : userLinks;
+  let links: SidebarLink[] = userRole === 'admin' ? adminLinks : userLinks;
 
   if (featureFlags) {
-      links = links.filter(link => {
-          if (!link.flag) return true;
-          return featureFlags[link.flag] === true;
-      });
+    links = links.filter((link) => {
+      if (!link.flag) return true;
+      return featureFlags[link.flag] === true;
+    });
   }
 
   const toggleSidebar = () => setIsOpen(!isOpen);

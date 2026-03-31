@@ -1,7 +1,13 @@
 'use client';
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useTheme } from '@org/theme';
+import type { TenantTheme } from '@org/theme';
+import type {
+  InputFieldProps,
+  LoginFormProps,
+  RegisterFormProps,
+} from '@org/shared-types';
 import { Button, Card } from './ui';
 
 export function InputField({
@@ -10,7 +16,8 @@ export function InputField({
   value,
   onChange,
   placeholder,
-}: any) {
+  required,
+}: InputFieldProps) {
   return (
     <div className="w-full mb-5">
       <label className="block mb-2 font-bold text-sm text-foreground">
@@ -21,19 +28,23 @@ export function InputField({
         value={value}
         onChange={onChange}
         placeholder={placeholder}
+        required={required}
         className="w-full p-3 min-h-[48px] text-base rounded-md border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-shadow"
-        required
       />
     </div>
   );
 }
 
-export function LoginForm({ onSubmit, loading, error }: any) {
+export function LoginForm({
+  onSubmit,
+  loading = false,
+  error,
+}: LoginFormProps) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const theme: any = useTheme();
+  const theme = useTheme() as TenantTheme;
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     onSubmit({ email, password });
   };
@@ -55,14 +66,14 @@ export function LoginForm({ onSubmit, loading, error }: any) {
           label="Email Address"
           type="email"
           value={email}
-          onChange={(e: any) => setEmail((e.target as any).value)}
+          onChange={(e) => setEmail(e.target.value)}
           placeholder="you@example.com"
         />
         <InputField
           label="Password"
           type="password"
           value={password}
-          onChange={(e: any) => setPassword((e.target as any).value)}
+          onChange={(e) => setPassword(e.target.value)}
           placeholder="••••••••"
         />
 
@@ -77,7 +88,7 @@ export function LoginForm({ onSubmit, loading, error }: any) {
       </form>
 
       <p className="text-center mt-8 text-sm text-muted-foreground">
-        Don't have an account?{' '}
+        Don&apos;t have an account?{' '}
         <a
           href="/register"
           className="text-primary hover:underline font-semibold"
@@ -89,13 +100,17 @@ export function LoginForm({ onSubmit, loading, error }: any) {
   );
 }
 
-export function RegisterForm({ onSubmit, loading, error }: any) {
+export function RegisterForm({
+  onSubmit,
+  loading = false,
+  error,
+}: RegisterFormProps) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const theme: any = useTheme();
+  const theme = useTheme() as TenantTheme;
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     onSubmit({ name, email, password });
   };
@@ -117,21 +132,21 @@ export function RegisterForm({ onSubmit, loading, error }: any) {
           label="Full Name"
           type="text"
           value={name}
-          onChange={(e: any) => setName((e.target as any).value)}
+          onChange={(e) => setName(e.target.value)}
           placeholder="John Doe"
         />
         <InputField
           label="Email Address"
           type="email"
           value={email}
-          onChange={(e: any) => setEmail((e.target as any).value)}
+          onChange={(e) => setEmail(e.target.value)}
           placeholder="you@example.com"
         />
         <InputField
           label="Password"
           type="password"
           value={password}
-          onChange={(e: any) => setPassword((e.target as any).value)}
+          onChange={(e) => setPassword(e.target.value)}
           placeholder="••••••••"
         />
 

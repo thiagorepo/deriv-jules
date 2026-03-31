@@ -66,6 +66,44 @@ export interface TenantConfig {
   limits: TenantLimits;
 }
 
+// Theme Types
+export interface ThemeConfig {
+  tenantName: string;
+  primaryColor?: string;
+  secondaryColor?: string;
+  logo?: string;
+  favicon?: string;
+}
+
+// UI Component Props
+export interface InputFieldProps {
+  label: string;
+  type?: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  placeholder?: string;
+  required?: boolean;
+}
+
+export interface LoginFormProps {
+  onSubmit: (data: { email: string; password: string }) => void;
+  loading?: boolean;
+  error?: string;
+}
+
+export interface RegisterFormProps {
+  onSubmit: (data: { name: string; email: string; password: string }) => void;
+  loading?: boolean;
+  error?: string;
+}
+
+export interface SidebarProps {
+  userRole: UserRole;
+  isOpen: boolean;
+  setIsOpen: (open: boolean) => void;
+  featureFlags?: Record<string, boolean>;
+}
+
 // Database Types
 export interface Database {
   public: {
